@@ -32,9 +32,9 @@ document.getElementById("login-form").addEventListener("submit", async function(
                 return;
             }
         }
-        errorMessage.textContent = "Hibás felhasználónév vagy jelszó.";
+        errorMessage.textContent = "Invalid username or password.";
     } catch (error) {
-        errorMessage.textContent = "Hiba történt a bejelentkezés során.";
+        errorMessage.textContent = "An error occurred during login.";
         console.error(error);
     }
 });
