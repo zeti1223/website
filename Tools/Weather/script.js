@@ -15,12 +15,6 @@ document.getElementById('cityInput').addEventListener('keypress', function (e) {
     }
 });
 
-document.addEventListener('keydown', function (e) {
-    if (e.ctrlKey && e.key === 'Enter') {
-        window.location.href = 'index2.html';
-    }
-});
-
 let typingTimer;
 const typingInterval = 2000; // 2 seconds
 
