@@ -34,7 +34,7 @@
         h1 {
             font-size: 2.8rem;
             margin-bottom: 10px;
-            color: #1DB954; /* Spotify zöld */
+            color: #1DB954; 
             text-shadow: 0 0 10px rgba(29, 185, 84, 0.5);
         }
 
@@ -190,7 +190,7 @@
         .spotify-container {
             width: 100%;
             max-width: 800px;
-            height: 352px; /* Spotify beágyazott lejátszó magasság */
+            height: 352px;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
@@ -302,7 +302,6 @@
 
         <main>
             <div class="calendar" id="calendar">
-                <!-- A naptár napjai JavaScript segítségével generálódnak -->
             </div>
 
             <div class="music-player" id="music-player">
@@ -313,7 +312,6 @@
 
                 <div class="player-body">
                     <div class="spotify-container" id="spotify-container">
-                        <!-- Spotify beágyazás kerül ide -->
                     </div>
                     <div class="no-player" id="no-player" style="display: none;">
                         <p>Ez a dal sajnos nem elérhető beágyazott formában.</p>
@@ -334,7 +332,6 @@
     </div>
 
     <script>
-        // Zenék listája évszámokkal - Spotify beágyazási linkekkel
         const songsByDay = {
             1: { year: 2001, title: "Kylie Minogue - Can't Get You Out Of My Head", spotifyId: "3E7ZwUMJFqpsDOJzEkBrQ7" },
             2: { year: 2002, title: "Eminem - Lose Yourself", spotifyId: "7MJQ9Nfxzh8LPZ9e9u68Fq" },
@@ -362,23 +359,19 @@
             24: { year: 2024, title: "Beyoncé - TEXAS HOLD 'EM", spotifyId: "0Z7nGFVCLfixWctgePsRk9" }
         };
 
-        // Jelenlegi dátum meghatározása
         const today = new Date();
         const currentYear = today.getFullYear();
-        const currentMonth = today.getMonth(); // 0 = január, 11 = december
+        const currentMonth = today.getMonth();
         const currentDay = today.getDate();
 
-        // December 1-jétől 24-ig tart az advent
         const adventStart = new Date(currentYear, 11, 1); // December 1
         const adventEnd = new Date(currentYear, 11, 24); // December 24
 
-        // Ellenőrizzük, hogy adventi időszakban vagyunk-e
         let isAdventPeriod = false;
         if (currentMonth === 11 && currentDay >= 1 && currentDay <= 24) {
             isAdventPeriod = true;
         }
 
-        // Napok generálása
         const calendar = document.getElementById('calendar');
         const todayDateElement = document.getElementById('today-date');
         const musicPlayer = document.getElementById('music-player');
@@ -387,11 +380,9 @@
         const spotifyContainer = document.getElementById('spotify-container');
         const noPlayer = document.getElementById('no-player');
 
-        // Mai dátum formázása
         const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
         todayDateElement.textContent = today.toLocaleDateString('hu-HU', options);
 
-        // Naptár napjainak generálása
         for (let day = 1; day <= 24; day++) {
             const dayElement = document.createElement('div');
             dayElement.className = 'day';
@@ -408,19 +399,15 @@
             const dayIcon = document.createElement('div');
             dayIcon.className = 'day-icon';
 
-            // Ellenőrizzük, hogy a nap már elérhető-e
             let isDayAvailable = false;
 
             if (isAdventPeriod) {
-                // Adventi időszakban vagyunk
                 if (day <= currentDay) {
                     isDayAvailable = true;
                 }
             } else if (currentMonth < 11 || (currentMonth === 11 && currentDay < 1)) {
-                // Még nem értünk decemberhez
                 isDayAvailable = false;
             } else {
-                // Advent után vagyunk, minden nap elérhető
                 isDayAvailable = true;
             }
 
@@ -439,16 +426,13 @@
             calendar.appendChild(dayElement);
         }
 
-        // Nap megnyitása
         function openDay(day) {
             const song = songsByDay[day];
             if (!song) return;
 
-            // Frissítjük a zenés felületet
             playerTitle.textContent = `${day}. decemberi zene`;
             songInfo.textContent = `${song.year} - ${song.title}`;
 
-            // Spotify beágyazása vagy üzenet megjelenítése
             if (song.spotifyId) {
                 spotifyContainer.innerHTML = `
                     <iframe
@@ -465,20 +449,16 @@
                 noPlayer.style.display = 'block';
             }
 
-            // Zenés felület megjelenítése
             musicPlayer.classList.add('active');
 
-            // Kiemeljük a kiválasztott napot
             document.querySelectorAll('.day').forEach(d => {
                 d.classList.remove('selected');
             });
             document.getElementById(`day-${day}`).classList.add('selected');
 
-            // Görgetés a zenés felületre
             musicPlayer.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Az első elérhető nap automatikus megnyitása
         function openFirstAvailableDay() {
             for (let day = 1; day <= 24; day++) {
                 const dayElement = document.getElementById(`day-${day}`);
@@ -489,24 +469,19 @@
             }
         }
 
-        // Oldal betöltésekor megnyitjuk a mai napot, ha adventi időszakban vagyunk
         if (isAdventPeriod && currentDay <= 24) {
             openDay(currentDay);
         } else if (currentMonth === 11 && currentDay > 24) {
-            // Ha advent után vagyunk, megnyitjuk az utolsó napot
             openDay(24);
         } else {
-            // Ha még nincs advent, megnyitjuk az első napot, ha már elérhető
             setTimeout(openFirstAvailableDay, 500);
         }
 
-        // Kis kiegészítés: automatikus dátumfrissítés
         function updateDate() {
             const now = new Date();
             todayDateElement.textContent = now.toLocaleDateString('hu-HU', options);
         }
 
-        // Dátum frissítése minden percben
         setInterval(updateDate, 60000);
     </script>
 </body>
