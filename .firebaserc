@@ -1,6 +1,7 @@
 {
   "projects": {
-    "website": "zeti1223"
+    "website": "zeti1223",
+    "default": "zeti1223"
   },
   "targets": {},
   "etags": {}
