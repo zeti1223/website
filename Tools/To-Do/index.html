@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>To-Do List</title>
 	<meta charset="UTF-8">
@@ -8,14 +9,14 @@
 	<link rel="stylesheet" href="https://unpkg.com/@catppuccin/palette@latest/css/catppuccin.css">
 	<style>
 		body {
-		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-		text-align: center;
-		color: var(--ctp-mocha-text);
-		font-size: 18px;
-		background-color: var(--ctp-mocha-base);
-		margin: 0;
-		padding: 20px;
-		}    
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			text-align: center;
+			color: var(--ctp-mocha-text);
+			font-size: 18px;
+			background-color: var(--ctp-mocha-base);
+			margin: 0;
+			padding: 20px;
+		}
 
 		.container {
 			max-width: 500px;
@@ -24,12 +25,12 @@
 			width: 100%;
 			box-sizing: border-box;
 		}
-		
+
 		h1 {
 			font-size: 2rem;
 			margin-top: 0;
 		}
-		
+
 		input[type="text"] {
 			width: 100%;
 			padding: 12px 20px;
@@ -41,7 +42,7 @@
 			border-radius: 4px;
 			font-size: 1rem;
 		}
-		
+
 		button {
 			background-color: var(--ctp-mocha-teal);
 			width: 100%;
@@ -53,7 +54,14 @@
 			font-size: 1.1rem;
 			font-weight: bold;
 		}
-		
+
+		ul {
+			padding: 0;
+			display: flex;
+			flex-direction: column;
+			gap: 5px;
+		}
+
 		li {
 			list-style-type: none;
 			border: 2px solid #ccc;
@@ -66,7 +74,7 @@
 			position: relative;
 			word-wrap: break-word;
 		}
-		
+
 		li span {
 			font-weight: bold;
 			position: absolute;
@@ -75,9 +83,10 @@
 			right: 10px;
 			cursor: pointer;
 			padding: 5px;
-		}		
+		}
 	</style>
 </head>
+
 <body>
 	<div class="container">
 		<h1>To-Do List</h1>
@@ -96,41 +105,51 @@
 		savedTasks.forEach(addTask);
 
 		function addTask(text) {
-		const newTask = document.createElement('li');
-		const taskName = document.createTextNode(text);
-		newTask.appendChild(taskName);
+			const newTask = document.createElement('li');
+			const taskName = document.createTextNode(text);
+			newTask.appendChild(taskName);
 
-		const deleteBtn = document.createElement('span');
-		const deleteText = document.createTextNode('✅');
-		deleteBtn.className = 'delete';
-		deleteBtn.appendChild(deleteText);
-		newTask.appendChild(deleteBtn);
+			const deleteBtn = document.createElement('span');
+			const deleteText = document.createTextNode('✅');
+			deleteBtn.className = 'delete';
+			deleteBtn.appendChild(deleteText);
+			newTask.appendChild(deleteBtn);
 
-		taskList.appendChild(newTask);
+			taskList.appendChild(newTask);
 		}
 
 		function saveTasks() {
-		const tasks = [];
-		taskList.querySelectorAll('li').forEach(task => {
-			tasks.push(task.firstChild.textContent);
-		});
-		localStorage.setItem('tasks', JSON.stringify(tasks));
+			const tasks = [];
+			taskList.querySelectorAll('li').forEach(task => {
+				tasks.push(task.firstChild.textContent);
+			});
+			localStorage.setItem('tasks', JSON.stringify(tasks));
 		}
 
 		btn.addEventListener('click', () => {
-		if (input.value === '') return;
-		addTask(input.value);
-		saveTasks();
-		input.value = '';
+			if (input.value === '') return;
+			addTask(input.value);
+			saveTasks();
+			input.value = '';
 		});
 
 		taskList.addEventListener('click', e => {
-		if (e.target.classList.contains('delete')) {
-			const parentTask = e.target.parentElement;
-			taskList.removeChild(parentTask);
-			saveTasks();
-		}
+			if (e.target.classList.contains('delete')) {
+				const parentTask = e.target.parentElement;
+				taskList.removeChild(parentTask);
+				saveTasks();
+			}
 		});
+
+		input.addEventListener('keypress', function (e) {
+			if (e.key === 'Enter') {
+				if (input.value === '') return;
+				addTask(input.value);
+				saveTasks();
+				input.value = '';
+			}
+		});	
 	</script>
 </body>
+
 </html>
