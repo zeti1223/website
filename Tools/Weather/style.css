@@ -1,38 +1,24 @@
-@font-face {
-    font-family: 'Font';
-    src: url('../../Fonts/SpaceMono-Regular.ttf') format('truetype');
-}
-
-:root {
-    --bg-c: rgb(3, 36, 63);
-    --text-c: rgb(255, 255, 255);
-    --border-c: rgb(12, 93, 160);
-    --hover-c: rgb(150, 196, 204);
-    --hover-a-c: rgb(134, 175, 182);
-}
-
 body {
-    font-family: 'Font', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
-    color: var(--text-c);
+    color: var(--ctp-mocha-text);
     font-size: 32px;
-    background-color: var(--bg-c);
+    background-color: var(--ctp-mocha-base);
 }
 
 input {
-    font-family: 'Font', sans-serif;
-    border: 2px solid var(--border-c);
-    background-color: var(--bg-c);
+    border: 2px solid var(--ctp-mocha-surface0);
+    background-color: var(--ctp-mocha-base);
     border-radius: 5px;
     text-align: center;
-    color: var(--text-c);
+    color: var(--ctp-mocha-text);
     font-weight: bold;
     font-size: 50%;
     cursor: default;
 }
 
 .weather_description {
-    color: var(--text-c);
+    color: var(--ctp-mocha-text);
     margin-top: 2rem;
     cursor: pointer;
     font-size: 30px;
@@ -40,8 +26,8 @@ input {
 }
 
 .weather_description:hover {
-    text-shadow: 0 0 20px #00fffb, 0 0 40px #0081bc;
-    transition: text-shadow 1s ease;
+    text-shadow: 0 0 20px var(--ctp-mocha-teal);
+    transition: text-shadow 0.2s ease;
 }
 
 #city {
@@ -51,12 +37,12 @@ input {
 }
 
 #city:hover {
-    text-shadow: 0 0 20px #00fffb, 0 0 40px #0081bc;
-    transition: text-shadow 0.8s ease;    
+    text-shadow: 0 0 20px var(--ctp-mocha-teal);
+    transition: text-shadow 0.5s ease;    
 }
 
 #error {
-    color: red;
+    color: var(--ctp-mocha-red);
     font-size: 40px;
     margin-top: 50px;
     font-weight: bold;

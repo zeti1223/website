@@ -1,4 +1,3 @@
-// Use your own OpenWeatherMap API Key below
 const apiKey = '1932ba53c628a41013a6d5e0a645b415'
 
 const weatherContainer = document.getElementById("weather");
@@ -76,8 +75,7 @@ function convertToLocalTime(dt) {
 
     const hours = date.getHours(); // Use 24-hour format without leading zero
 
-    // Formatted date string in the format: h óra
-    return `${hours} óra`;
+    return `${hours}:00`;
 }
 
 function createWeatherDescription(weatherData) {
