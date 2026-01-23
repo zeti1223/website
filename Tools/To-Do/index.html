@@ -2,8 +2,66 @@
 <html>
 <head>
 	<title>To-Do List</title>
-	<link rel="stylesheet" type="text/css" href="kinezet.css">
 	<link rel="website icon" type="png" href="../../Icon/todo.png">
+	<link rel="stylesheet" href="https://unpkg.com/@catppuccin/palette@latest/css/catppuccin.css">
+	<style>
+		body {
+		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+		text-align: center;
+		color: var(--ctp-mocha-text);
+		font-size: 32px;
+		background-color: var(--ctp-mocha-base);
+		}    
+
+		.container {
+			max-width: 500px;
+			margin: 0 auto;
+			text-align: center;
+		}
+		
+		h1 {
+			font-size: 36px;
+		}
+		
+		input[type="text"] {
+			width: 70%;
+			padding: 12px 20px;
+			margin: 8px 0;
+			background-color: var(--ctp-mocha-surface1);
+			color: var(--ctp-mocha-text);
+			box-sizing: border-box;
+			border: 2px solid #ccc;
+			border-radius: 4px;
+		}
+		
+		button {
+			background-color: var(--ctp-mocha-teal);
+			padding: 14px 20px;
+			margin: 8px 0;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+		
+		li {
+			list-style-type: none;
+			border: 2px solid #ccc;
+			border-radius: 4px;
+			background-color: var(--ctp-mocha-surface1);
+			font-size: 20px;
+			padding: 10px;
+			text-align: left;
+			position: relative;
+		}
+		
+		li span {
+			font-weight: bold;
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			cursor: pointer;
+		}		
+	</style>
 </head>
 <body>
 	<div class="container">
@@ -14,7 +72,50 @@
 			<!-- tasks will be added dynamically here -->
 		</ul>
 	</div>
-	<script type="text/javascript" src="script.js"></script>
-	<script src="../inspect.js"></script>
+	<script>
+		const input = document.querySelector('input');
+		const btn = document.querySelector('button');
+		const taskList = document.querySelector('#task-list');
+
+		const savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+		savedTasks.forEach(addTask);
+
+		function addTask(text) {
+		const newTask = document.createElement('li');
+		const taskName = document.createTextNode(text);
+		newTask.appendChild(taskName);
+
+		const deleteBtn = document.createElement('span');
+		const deleteText = document.createTextNode('✅');
+		deleteBtn.className = 'delete';
+		deleteBtn.appendChild(deleteText);
+		newTask.appendChild(deleteBtn);
+
+		taskList.appendChild(newTask);
+		}
+
+		function saveTasks() {
+		const tasks = [];
+		taskList.querySelectorAll('li').forEach(task => {
+			tasks.push(task.firstChild.textContent);
+		});
+		localStorage.setItem('tasks', JSON.stringify(tasks));
+		}
+
+		btn.addEventListener('click', () => {
+		if (input.value === '') return;
+		addTask(input.value);
+		saveTasks();
+		input.value = '';
+		});
+
+		taskList.addEventListener('click', e => {
+		if (e.target.classList.contains('delete')) {
+			const parentTask = e.target.parentElement;
+			taskList.removeChild(parentTask);
+			saveTasks();
+		}
+		});
+	</script>
 </body>
 </html>
