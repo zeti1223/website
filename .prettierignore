@@ -1,0 +1,7 @@
+# Dependencies
+node_modules
+
+# Build & Dist
+build
+dist
+firebase.json
