@@ -25,7 +25,7 @@ let highScore = localStorage.getItem("highScore") || 0;
 const highScoreDisplay = document.getElementById("high-score");
 
 const foodImage = new Image();
-foodImage.src = 'logo.png';
+foodImage.src = "logo.png";
 
 function gameLoop() {
   update();
@@ -76,7 +76,6 @@ canvas.addEventListener("touchmove", (e) => {
   touchStartY = null;
 });
 
-
 gameLoop();
 
 function update() {
@@ -122,7 +121,12 @@ function draw() {
   context.fillStyle = "orange";
   context.fillRect(0, 0, canvas.width, canvas.height);
 
-  const gradient = context.createLinearGradient(0, 0, canvas.width, canvas.height);
+  const gradient = context.createLinearGradient(
+    0,
+    0,
+    canvas.width,
+    canvas.height,
+  );
   gradient.addColorStop(0, "green");
   gradient.addColorStop(1, "green");
   context.fillStyle = gradient;

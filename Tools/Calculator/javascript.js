@@ -19,12 +19,13 @@ var vars = {
   six: document.getElementsByClassName("six")[0],
   seven: document.getElementsByClassName("seven")[0],
   eight: document.getElementsByClassName("eight")[0],
-  nine: document.getElementsByClassName("nine")[0]
-}
+  nine: document.getElementsByClassName("nine")[0],
+};
 //hundlers
 
 for (var btn in vars) {
-  if (btn === "display" || btn === "displayInfo" || btn === "displayInd") continue;
+  if (btn === "display" || btn === "displayInfo" || btn === "displayInd")
+    continue;
   (function (button) {
     vars[button].addEventListener("click", function () {
       calculate(button);
@@ -33,7 +34,7 @@ for (var btn in vars) {
     if (button === "ac" || button === "ce" || button === "eq") {
       document.addEventListener("keyup", function (event) {
         if (button === getChar(event, true)) {
-          calculate(getChar(event, true))
+          calculate(getChar(event, true));
         }
       });
     } else {
@@ -50,24 +51,24 @@ function getChar(event, add) {
   var keyMap = {
     13: "eq",
     35: "ce",
-    46: "ac"
+    46: "ac",
   };
 
   if (add) {
     return keyMap[event.which];
   } else {
     if (event.which == null) {
-      if (event.keyCode < 32) return "eq"
-      return String.fromCharCode(event.keyCode)
+      if (event.keyCode < 32) return "eq";
+      return String.fromCharCode(event.keyCode);
     }
 
     if (event.which != 0 && event.charCode != 0) {
-      if (event.which < 32) return "eq"
+      if (event.which < 32) return "eq";
       return String.fromCharCode(event.which);
     }
   }
 
-  return ""
+  return "";
 }
 
 function toStr(btn) {
@@ -86,24 +87,26 @@ function toStr(btn) {
     mult: "*",
     plus: "+",
     minus: "-",
-    dot: "."
-  }
-  if (btn === "ce") return ""
+    dot: ".",
+  };
+  if (btn === "ce") return "";
   return btns[btn];
 }
 
 function removeZero(str) {
   var result = str;
 
-  var senseOperators = ["+", "-"]
+  var senseOperators = ["+", "-"];
 
   var dotCond, firstZero, operZero;
 
   for (var i = 0; i < result.length - 1; i++) {
-
-    dotCond = (result[i + 1] !== ".");
-    firstZero = (i === 0) && (result[i] === "0") && dotCond;
-    operZero = (senseOperators.indexOf(result[i - 1]) !== -1) && (result[i] === "0") && dotCond;
+    dotCond = result[i + 1] !== ".";
+    firstZero = i === 0 && result[i] === "0" && dotCond;
+    operZero =
+      senseOperators.indexOf(result[i - 1]) !== -1 &&
+      result[i] === "0" &&
+      dotCond;
 
     if (firstZero || operZero) {
       result = result.slice(0, i) + result.slice(i + 1);
@@ -111,8 +114,7 @@ function removeZero(str) {
     }
   }
 
-  return result
-
+  return result;
 }
 
 function fixOper(str) {
@@ -122,7 +124,9 @@ function fixOper(str) {
   var cond, optCond;
 
   for (var i = 0; i < result.length - 1; i++) {
-    cond = operators1.indexOf(result[i]) !== -1 && operators1.indexOf(result[i + 1]) !== -1;
+    cond =
+      operators1.indexOf(result[i]) !== -1 &&
+      operators1.indexOf(result[i + 1]) !== -1;
 
     if (cond) {
       result = result.slice(0, i) + result.slice(i + 1);
@@ -130,25 +134,32 @@ function fixOper(str) {
   }
 
   for (i = 0; i < result.length - 1; i++) {
-    cond = operators2.indexOf(result[i]) !== -1 && (result[i] === result[i + 1]);
-    optCond = (result[i] === "-") && (result[i + 1] === "+");
+    cond = operators2.indexOf(result[i]) !== -1 && result[i] === result[i + 1];
+    optCond = result[i] === "-" && result[i + 1] === "+";
 
     if (cond) {
       result = result.slice(0, i) + result.slice(i + 1);
     } else if (optCond) {
-      result = result.slice(0, i + 1) + result.slice(i + 2)
+      result = result.slice(0, i + 1) + result.slice(i + 2);
     }
   }
 
   for (i = 0; i < result.length - 2; i++) {
-    if (operators1.indexOf(result[i]) !== -1 && operators2.indexOf(result[i + 1]) !== -1 && operators1.indexOf(result[i + 2]) !== -1) {
+    if (
+      operators1.indexOf(result[i]) !== -1 &&
+      operators2.indexOf(result[i + 1]) !== -1 &&
+      operators1.indexOf(result[i + 2]) !== -1
+    ) {
       result = result.slice(0, i + 2) + result.slice(i + 3);
     }
   }
 
   for (i = 0; i < result.length - 1; i++) {
-    if (operators2.indexOf(result[i]) !== -1 && operators1.indexOf(result[i + 1]) !== -1) {
-      result = result.slice(0, i + 1) + result.slice(i + 2)
+    if (
+      operators2.indexOf(result[i]) !== -1 &&
+      operators1.indexOf(result[i + 1]) !== -1
+    ) {
+      result = result.slice(0, i + 1) + result.slice(i + 2);
     }
   }
 
@@ -161,7 +172,8 @@ function fixOper(str) {
 
 function removeLast(str) {
   var operators = ["+", "-", "*", "/"],
-    cond, result = str;
+    cond,
+    result = str;
   if (str.length === 1) {
     return "0";
   } else {
@@ -185,8 +197,8 @@ var max = {
     if (vars.displayInd.classList.toggle("max")) {
       vars.displayInd.classList.toggle("max");
     }
-  }
-}
+  },
+};
 
 function calculate(btn, isFromKey) {
   var operators = ["minus", "plus", "div", "mult"];
@@ -241,13 +253,11 @@ function calculate(btn, isFromKey) {
     } else {
       vars.display.innerText = calc;
     }
-
   } else if (calc < 1) {
     vars.display.innerText = (+calc).toPrecision(7);
   } else {
     vars.display.innerText = (+calc).toPrecision(9);
   }
-
 }
 
 var colors = ["pink", "lightblue"];

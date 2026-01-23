@@ -1,93 +1,94 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
-    <link rel="stylesheet" href="https://unpkg.com/@catppuccin/palette@latest/css/catppuccin.css">
-    <link rel="website icon" type="png" href="Icon/login.png">
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@catppuccin/palette@latest/css/catppuccin.css"
+    />
+    <link rel="website icon" type="png" href="Icon/login.png" />
     <style>
-        body {
-            background-color: var(--ctp-mocha-base);
-            color: var(--ctp-mocha-text);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
+      body {
+        background-color: var(--ctp-mocha-base);
+        color: var(--ctp-mocha-text);
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
 
-        .login-container {
-            background-color: var(--ctp-mocha-surface0);
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            text-align: center;
-        }
+      .login-container {
+        background-color: var(--ctp-mocha-surface0);
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        text-align: center;
+      }
 
-        h2 {
-            margin-bottom: 20px;
-        }
+      h2 {
+        margin-bottom: 20px;
+      }
 
-        .form-control {
-            margin-bottom: 15px;
-            text-align: left;
-        }
+      .form-control {
+        margin-bottom: 15px;
+        text-align: left;
+      }
 
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
 
-        input[type="text"],
-        input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--ctp-mocha-text);
-            background-color: var(--ctp-mocha-surface1);
-            color: var(--ctp-mocha-text);
-            border-radius: 5px;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid var(--ctp-mocha-text);
+        background-color: var(--ctp-mocha-surface1);
+        color: var(--ctp-mocha-text);
+        border-radius: 5px;
+        box-sizing: border-box;
+        font-size: 16px;
+      }
 
-        button[type="submit"] {
-            background-color: var(--ctp-mocha-teal);
-            color: var(--ctp-mocha-base);
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
+      button[type="submit"] {
+        background-color: var(--ctp-mocha-teal);
+        color: var(--ctp-mocha-base);
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
 
-        #error-message {
-            color: var(--ctp-mocha-red);
-            margin-top: 10px;
-        }
+      #error-message {
+        color: var(--ctp-mocha-red);
+        margin-top: 10px;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="login-container">
-        <h2>Login</h2>
-        <form id="login-form">
-            <div class="form-control">
-                <label for="username">Username</label>
-                <input type="text" id="username" required>
-            </div>
-            <div class="form-control">
-                <label for="password">Password</label>
-                <input type="password" id="password" required>
-            </div>
-            <button type="submit">Login</button>
-        </form>
-        <p id="error-message"></p>
+      <h2>Login</h2>
+      <form id="login-form">
+        <div class="form-control">
+          <label for="username">Username</label>
+          <input type="text" id="username" required />
+        </div>
+        <div class="form-control">
+          <label for="password">Password</label>
+          <input type="password" id="password" required />
+        </div>
+        <button type="submit">Login</button>
+      </form>
+      <p id="error-message"></p>
     </div>
     <script type="module" src="Login-script.js"></script>
     <script src="inspect.js"></script>
-</body>
-
+  </body>
 </html>

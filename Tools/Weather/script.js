@@ -1,111 +1,110 @@
-const apiKey = '1932ba53c628a41013a6d5e0a645b415'
+const apiKey = "1932ba53c628a41013a6d5e0a645b415";
 
 const weatherContainer = document.getElementById("weather");
 const city = document.getElementById("city");
-const error = document.getElementById('error');
+const error = document.getElementById("error");
 
-const units = 'metric'; //can be imperial or metric
-let temperatureSymobol = units == 'imperial' ? "°F" : "°C";
+const units = "metric"; //can be imperial or metric
+let temperatureSymobol = units == "imperial" ? "°F" : "°C";
 
 // Add event listener to trigger fetchWeather on Enter key press
-document.getElementById('cityInput').addEventListener('keypress', function (e) {
-    if (e.key === 'Enter') {
-        fetchWeather();
-    }
+document.getElementById("cityInput").addEventListener("keypress", function (e) {
+  if (e.key === "Enter") {
+    fetchWeather();
+  }
 });
 
 let typingTimer;
 const typingInterval = 2000; // 2 seconds
 
-document.getElementById('cityInput').addEventListener('input', function () {
-    clearTimeout(typingTimer);
-    if (document.getElementById('cityInput').value.trim() !== '') {
-        typingTimer = setTimeout(fetchWeather, typingInterval);
-    }
+document.getElementById("cityInput").addEventListener("input", function () {
+  clearTimeout(typingTimer);
+  if (document.getElementById("cityInput").value.trim() !== "") {
+    typingTimer = setTimeout(fetchWeather, typingInterval);
+  }
 });
 
 // Add event listener to city element to show city input field again
-city.addEventListener('click', function () {
-    document.getElementById('cityInput').style.display = 'block';
+city.addEventListener("click", function () {
+  document.getElementById("cityInput").style.display = "block";
 });
 
 async function fetchWeather() {
-    try {
-        weatherContainer.innerHTML = '';
-        error.innerHTML = '';
-        city.innerHTML = '';
+  try {
+    weatherContainer.innerHTML = "";
+    error.innerHTML = "";
+    city.innerHTML = "";
 
-        const cnt = 8; // 8 data points per day
-        const cityInputtedByUser = document.getElementById('cityInput').value;
+    const cnt = 8; // 8 data points per day
+    const cityInputtedByUser = document.getElementById("cityInput").value;
 
-        // Hide the input field after the user enters a city
-        document.getElementById('cityInput').style.display = 'none';
+    // Hide the input field after the user enters a city
+    document.getElementById("cityInput").style.display = "none";
 
-        const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${cityInputtedByUser}&appid=${apiKey}&units=${units}&cnt=${cnt}`;
+    const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${cityInputtedByUser}&appid=${apiKey}&units=${units}&cnt=${cnt}`;
 
-        const response = await fetch(apiUrl);
-        const data = await response.json();
+    const response = await fetch(apiUrl);
+    const data = await response.json();
 
-        if (data.cod == '400' || data.cod == '404') {
-            error.innerHTML = `Nem valós város. Kérjük, adjon meg egy másik várost!`;
-            // Show the input field again if the city is not valid
-            document.getElementById('cityInput').style.display = 'block';
-            return;
-        }
-        // Display weather data for each 3 hour increment
-        data.list.forEach(hourlyWeatherData => {
-            const hourlyWeatherDataDiv = createWeatherDescription(hourlyWeatherData);
-            weatherContainer.appendChild(hourlyWeatherDataDiv);
-        });
-
-        // Display city name based on latitude and longitude
-        city.innerHTML = `${data.city.name}`;
-
-    } catch (error) {
-        console.log(error);
-        // Show the input field again if an error occurs
-        document.getElementById('cityInput').style.display = 'block';
+    if (data.cod == "400" || data.cod == "404") {
+      error.innerHTML = `Nem valós város. Kérjük, adjon meg egy másik várost!`;
+      // Show the input field again if the city is not valid
+      document.getElementById("cityInput").style.display = "block";
+      return;
     }
+    // Display weather data for each 3 hour increment
+    data.list.forEach((hourlyWeatherData) => {
+      const hourlyWeatherDataDiv = createWeatherDescription(hourlyWeatherData);
+      weatherContainer.appendChild(hourlyWeatherDataDiv);
+    });
+
+    // Display city name based on latitude and longitude
+    city.innerHTML = `${data.city.name}`;
+  } catch (error) {
+    console.log(error);
+    // Show the input field again if an error occurs
+    document.getElementById("cityInput").style.display = "block";
+  }
 }
 
 function convertToLocalTime(dt) {
-    // Create a new Date object by multiplying the Unix timestamp by 1000 to convert it to milliseconds
-    // Will produce a time in the local timezone of user's computer
-    const date = new Date(dt * 1000);
+  // Create a new Date object by multiplying the Unix timestamp by 1000 to convert it to milliseconds
+  // Will produce a time in the local timezone of user's computer
+  const date = new Date(dt * 1000);
 
-    const hours = date.getHours(); // Use 24-hour format without leading zero
+  const hours = date.getHours(); // Use 24-hour format without leading zero
 
-    return `${hours}:00`;
+  return `${hours}:00`;
 }
 
 function createWeatherDescription(weatherData) {
-    const { main, dt } = weatherData;
+  const { main, dt } = weatherData;
 
-    const description = document.createElement("div");
-    const convertedDateAndTime = convertToLocalTime(dt);
+  const description = document.createElement("div");
+  const convertedDateAndTime = convertToLocalTime(dt);
 
-    // Round the temperature
-    const roundedTemp = Math.round(main.temp);
+  // Round the temperature
+  const roundedTemp = Math.round(main.temp);
 
-    let isRounded = true;
+  let isRounded = true;
 
-    description.innerHTML = `
+  description.innerHTML = `
         <div class="weather_description">${roundedTemp}${temperatureSymobol} - ${convertedDateAndTime}</div>
     `;
 
-    // Add event listener to toggle temperature display on click
-    description.addEventListener('click', () => {
-        if (isRounded) {
-            description.innerHTML = `
+  // Add event listener to toggle temperature display on click
+  description.addEventListener("click", () => {
+    if (isRounded) {
+      description.innerHTML = `
                 <div class="weather_description">${main.temp}${temperatureSymobol} - ${convertedDateAndTime}</div>
             `;
-        } else {
-            description.innerHTML = `
+    } else {
+      description.innerHTML = `
                 <div class="weather_description">${roundedTemp}${temperatureSymobol} - ${convertedDateAndTime}</div>
             `;
-        }
-        isRounded = !isRounded;
-    });
+    }
+    isRounded = !isRounded;
+  });
 
-    return description;
+  return description;
 }
