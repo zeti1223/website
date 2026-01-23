@@ -55,3 +55,4 @@ pids/
 *.seed
 *.pid.lock
 
+.firebase/
