@@ -2,6 +2,8 @@
 <html>
   <head>
     <title>Ztools</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unpkg.com/@catppuccin/palette@latest/css/catppuccin.css">
     <link rel="website icon" type="png" href="Icon/main.png">
 
@@ -15,6 +17,8 @@
         justify-content: center;
         align-items: center;
         min-height: 100vh;
+        padding: 20px;
+        box-sizing: border-box;
       }
       .menu {
         display: flex;
@@ -33,9 +37,16 @@
         font-weight: bold;
         font-size: 1.1rem;
         transition: transform 0.2s;
+        user-select: none;
+        -webkit-user-select: none;
       }
-      a:hover {
-        transform: scale(1.03);
+      @media (hover: hover) {
+        a:hover {
+          transform: scale(1.03);
+        }
+      }
+      a:active {
+        transform: scale(0.98);
       }
       .section-title {
         color: var(--ctp-mocha-subtext0);
@@ -54,6 +65,11 @@
       p {
         margin: 0;
       }
+      @media (max-width: 768px) {
+        .desktop-only {
+          display: none;
+        }
+      }
     </style>
   </head>
   <body>
@@ -66,7 +82,7 @@
         <a href="Tools/To-Do/index.html">
           <p>To-do</p>
         </a>
-        <a href="Tools/Whiteboard/index.html">
+        <a href="Tools/Whiteboard/index.html" class="desktop-only">
           <p>Whiteboard</p>
         </a>
         <a href="Tools/Weather/index.html">
