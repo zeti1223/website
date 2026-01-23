@@ -3,8 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Virtual Whiteboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="website icon" type="png" href="../Icon/whiteboard.png">
@@ -46,8 +45,7 @@
                     <label for="toolSelect" class="mr-2">
                         Tool:
                     </label>
-                    <select id="toolSelect"
-                            class="px-3 py-2 bg-gray-200 
+                    <select id="toolSelect" class="px-3 py-2 bg-gray-200 
                                 rounded-lg appearance-none">
                         <option value="pen">Pen</option>
                         <option value="line">Line</option>
@@ -62,8 +60,7 @@
                                                 hover:bg-green-600">
                         Save
                     </button>
-                    <input type="file" id="imageInput"
-                        accept="image/*" class="hidden">
+                    <input type="file" id="imageInput" accept="image/*" class="hidden">
                     <button id="imageBtn" class="px-4 py-2 bg-yellow-500 
                                                 text-white rounded-lg 
                                                 hover:bg-yellow-600">
@@ -72,11 +69,9 @@
                 </div>
             </div>
             <div id="textInput" class="mb-4 hidden">
-                <input type="text" id="textBox"
-                    class="border border-gray-300 rounded
+                <input type="text" id="textBox" class="border border-gray-300 rounded
                             px-3 py-2 focus:outline-none">
-                <button id="textBtn"
-                        class="ml-2 px-4 py-2 bg-blue-500 
+                <button id="textBtn" class="ml-2 px-4 py-2 bg-blue-500 
                             text-white rounded-lg 
                             hover:bg-blue-600">
                     Add Text
@@ -141,8 +136,8 @@
         canvas.addEventListener('mousemove', (e) => {
             if (tool === 'pen' && isDrawing) {
                 draw(e);
-            } else if (tool === 'line' || tool === 'rectangle' 
-                                        || tool === 'circle') {
+            } else if (tool === 'line' || tool === 'rectangle'
+                || tool === 'circle') {
                 if (!drag) return;
                 const { offsetX, offsetY } = e;
                 context.clearRect(0, 0, canvas.width, canvas.height);
@@ -186,8 +181,8 @@
         });
         canvas.addEventListener('mouseup', (e) => {
             isDrawing = false;
-            if (tool === 'line' || tool === 'rectangle' 
-                                || tool === 'circle') {
+            if (tool === 'line' || tool === 'rectangle'
+                || tool === 'circle') {
                 shapes.push({
                     type: tool,
                     startX: dragStartX,
@@ -195,16 +190,16 @@
                     endX: e.offsetX,
                     endY: e.offsetY,
                     radius: Math.sqrt(Math
-                                    .pow(e.offsetX - dragStartX, 2) +
-                            Math.pow(e.offsetY - dragStartY, 2))
+                        .pow(e.offsetX - dragStartX, 2) +
+                        Math.pow(e.offsetY - dragStartY, 2))
                 });
             }
             drag = false;
         });
         document.getElementById('clearBtn')
-                .addEventListener('click', () => {
-                    context.clearRect(0, 0, canvas.width, canvas.height);
-                    shapes = [];
+            .addEventListener('click', () => {
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                shapes = [];
             });
         document.getElementById('eraserBtn')
             .addEventListener('click', () => {
@@ -221,48 +216,48 @@
                 tool = e.target.value;
                 if (tool === 'text') {
                     document.getElementById('textInput')
-                            .classList.remove('hidden');
+                        .classList.remove('hidden');
                     document.getElementById('textBox').focus();
                 } else {
                     document.getElementById('textInput')
-                            .classList.add('hidden');
+                        .classList.add('hidden');
                 }
             });
         document.getElementById('textBtn')
-                .addEventListener('click', () => {
-            const text = document.getElementById('textBox')
-                                .value;
-            context.font = '16px Arial';
-            context.fillText(text, lastX, lastY);
-            document.getElementById('textInput')
+            .addEventListener('click', () => {
+                const text = document.getElementById('textBox')
+                    .value;
+                context.font = '16px Arial';
+                context.fillText(text, lastX, lastY);
+                document.getElementById('textInput')
                     .classList.add('hidden');
-            tool = 'pen';
-        });
+                tool = 'pen';
+            });
         document.getElementById('imageBtn')
-                .addEventListener('click', () => {
-            document.getElementById('imageInput').click();
-        });
+            .addEventListener('click', () => {
+                document.getElementById('imageInput').click();
+            });
         document.getElementById('imageInput')
-                .addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            const reader = new FileReader();
-            reader.onload = () => {
-                const img = new Image();
-                img.onload = () => {
-                    context.drawImage(img, 0, 0);
+            .addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const img = new Image();
+                    img.onload = () => {
+                        context.drawImage(img, 0, 0);
+                    };
+                    img.src = reader.result;
                 };
-                img.src = reader.result;
-            };
-            reader.readAsDataURL(file);
-        });
+                reader.readAsDataURL(file);
+            });
         document.getElementById('saveBtn')
-                .addEventListener('click', () => {
-            const image = canvas.toDataURL('image/png');
-            const link = document.createElement('a');
-            link.href = image;
-            link.download = 'whiteboard.png';
-            link.click();
-        });
+            .addEventListener('click', () => {
+                const image = canvas.toDataURL('image/png');
+                const link = document.createElement('a');
+                link.href = image;
+                link.download = 'whiteboard.png';
+                link.click();
+            });
     </script>
 </body>
 

@@ -33,12 +33,12 @@ input {
 #city {
     font-size: 75px;
     cursor: default;
-    transition: text-shadow 0.4s ease;    
+    transition: text-shadow 0.4s ease;
 }
 
 #city:hover {
     text-shadow: 0 0 20px var(--ctp-mocha-teal);
-    transition: text-shadow 0.5s ease;    
+    transition: text-shadow 0.5s ease;
 }
 
 #error {

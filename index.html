@@ -1,129 +1,146 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Ztools</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://unpkg.com/@catppuccin/palette@latest/css/catppuccin.css">
-    <link rel="website icon" type="png" href="Icon/main.png">
 
-    <style>
-      body {
-        background-color: var(--ctp-mocha-base);
-        color: var(--ctp-mocha-text);
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        margin: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        padding: 20px;
-        box-sizing: border-box;
-      }
-      .menu {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        width: 100%;
-        max-width: 300px;
-      }
-      a {
-        background-color: var(--ctp-mocha-teal);
-        color: var(--ctp-mocha-base);
-        text-decoration: none;
-        padding: 15px;
-        border-radius: 12px;
-        text-align: center;
-        font-weight: bold;
-        font-size: 1.1rem;
-        transition: transform 0.2s;
-        user-select: none;
-        -webkit-user-select: none;
-      }
-      @media (hover: hover) {
-        a:hover {
-          transform: scale(1.03);
-        }
-      }
-      a:active {
-        transform: scale(0.98);
-      }
-      .section-title {
-        color: var(--ctp-mocha-subtext0);
-        font-size: 0.9rem;
-        font-weight: bold;
-        text-transform: uppercase;
-        margin-top: 15px;
-        margin-bottom: 5px;
-      }
-      .menu-section {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        width: 100%;
-      }
-      p {
-        margin: 0;
-      }
-      @media (max-width: 768px) {
-        .desktop-only {
-          display: none;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="menu">
-      <div id="main-menu" class="menu-section">
-        <div class="section-title">Tools</div>
-        <a href="Tools/Calculator/index.html">
-          <p>Calculator</p>
-        </a>
-        <a href="Tools/To-Do/index.html">
-          <p>To-do</p>
-        </a>
-        <a href="Tools/Whiteboard/index.html" class="desktop-only">
-          <p>Whiteboard</p>
-        </a>
-        <a href="Tools/Weather/index.html">
-          <p>Weather</p>
-        </a>
-        <a href="Tools/Quiz/index.html">
-          <p>Quiz</p>
-        </a>
-        <div class="section-title">Menu</div>
-        <a href="javascript:void(0)" onclick="toggleMenu('games')">
-          <p>Games</p>
-        </a>
-        <a href="Login.html">
-          <p>Login</p>
-        </a>
-      </div>
+<head>
+  <title>Ztools</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/@catppuccin/palette@latest/css/catppuccin.css">
+  <link rel="website icon" type="png" href="Icon/main.png">
 
-      <div id="games-menu" class="menu-section" style="display: none;">
-        <div class="section-title">Games</div>
-        <a href="Games/Pac-Man/index.html"><p>Pac-Man</p></a>
-        <a href="Games/2048/index.html"><p>2048</p></a>
-        <a href="Games/Snake/index.html"><p>Snake</p></a>
-        <div class="section-title">Navigation</div>
-        <a href="javascript:void(0)" onclick="toggleMenu('main')">
-          <p>Back</p>
-        </a>
-      </div>
+  <style>
+    body {
+      background-color: var(--ctp-mocha-base);
+      color: var(--ctp-mocha-text);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 100%;
+      max-width: 300px;
+    }
+
+    a {
+      background-color: var(--ctp-mocha-teal);
+      color: var(--ctp-mocha-base);
+      text-decoration: none;
+      padding: 15px;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.1rem;
+      transition: transform 0.2s;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    @media (hover: hover) {
+      a:hover {
+        transform: scale(1.03);
+      }
+    }
+
+    a:active {
+      transform: scale(0.98);
+    }
+
+    .section-title {
+      color: var(--ctp-mocha-subtext0);
+      font-size: 0.9rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-top: 15px;
+      margin-bottom: 5px;
+    }
+
+    .menu-section {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 100%;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    @media (max-width: 768px) {
+      .desktop-only {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="menu">
+    <div id="main-menu" class="menu-section">
+      <div class="section-title">Tools</div>
+      <a href="Tools/Calculator/index.html">
+        <p>Calculator</p>
+      </a>
+      <a href="Tools/To-Do/index.html">
+        <p>To-do</p>
+      </a>
+      <a href="Tools/Whiteboard/index.html" class="desktop-only">
+        <p>Whiteboard</p>
+      </a>
+      <a href="Tools/Weather/index.html">
+        <p>Weather</p>
+      </a>
+      <a href="Tools/Quiz/index.html">
+        <p>Quiz</p>
+      </a>
+      <div class="section-title">Menu</div>
+      <a href="javascript:void(0)" onclick="toggleMenu('games')">
+        <p>Games</p>
+      </a>
+      <a href="Login.html">
+        <p>Login</p>
+      </a>
     </div>
-    <script>
-      function toggleMenu(menu) {
-        const main = document.getElementById('main-menu');
-        const games = document.getElementById('games-menu');
-        if (menu === 'games') {
-          main.style.display = 'none';
-          games.style.display = 'flex';
-        } else {
-          main.style.display = 'flex';
-          games.style.display = 'none';
-        }
+
+    <div id="games-menu" class="menu-section" style="display: none;">
+      <div class="section-title">Games</div>
+      <a href="Games/Pac-Man/index.html">
+        <p>Pac-Man</p>
+      </a>
+      <a href="Games/2048/index.html">
+        <p>2048</p>
+      </a>
+      <a href="Games/Snake/index.html">
+        <p>Snake</p>
+      </a>
+      <div class="section-title">Navigation</div>
+      <a href="javascript:void(0)" onclick="toggleMenu('main')">
+        <p>Back</p>
+      </a>
+    </div>
+  </div>
+  <script>
+    function toggleMenu(menu) {
+      const main = document.getElementById('main-menu');
+      const games = document.getElementById('games-menu');
+      if (menu === 'games') {
+        main.style.display = 'none';
+        games.style.display = 'flex';
+      } else {
+        main.style.display = 'flex';
+        games.style.display = 'none';
       }
-    </script>
-    <script src="inspect.js"></script>
-  </body>
+    }
+  </script>
+  <script src="inspect.js"></script>
+</body>
+
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="hu">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,7 +35,7 @@
         h1 {
             font-size: 2.8rem;
             margin-bottom: 10px;
-            color: #1DB954; 
+            color: #1DB954;
             text-shadow: 0 0 10px rgba(29, 185, 84, 0.5);
         }
 
@@ -142,8 +143,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .player-header {
@@ -288,11 +296,14 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <header>
             <h1><i class="fab fa-spotify spotify-logo"></i> Adventi Zenekalendárium</h1>
-            <p class="subtitle">Fedezd fel az évszázad legnagyobb slágereit Spotify-on! Minden nap egy új zene vár, melyek az adott év egyik leghíresebb számából állnak. A kalendárium csak az aktuális napig érhető el.</p>
+            <p class="subtitle">Fedezd fel az évszázad legnagyobb slágereit Spotify-on! Minden nap egy új zene vár,
+                melyek az adott év egyik leghíresebb számából állnak. A kalendárium csak az aktuális napig érhető el.
+            </p>
 
             <div class="current-date">
                 <i class="fas fa-calendar-alt"></i>
@@ -321,7 +332,9 @@
             </div>
 
             <div class="instructions">
-                <p><i class="fas fa-info-circle"></i> Kattints egy nyitott napra a zene meghallgatásához. A mai napig minden nap elérhető, a jövőbeli napok még zárolva vannak. <i class="fab fa-spotify spotify-logo"></i></p>
+                <p><i class="fas fa-info-circle"></i> Kattints egy nyitott napra a zene meghallgatásához. A mai napig
+                    minden nap elérhető, a jövőbeli napok még zárolva vannak. <i
+                        class="fab fa-spotify spotify-logo"></i></p>
             </div>
         </main>
 
@@ -485,4 +498,5 @@
         setInterval(updateDate, 60000);
     </script>
 </body>
+
 </html>

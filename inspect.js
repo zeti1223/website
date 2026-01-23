@@ -1,3 +1,3 @@
-document.addEventListener("contextmenu",(e)=>{
+document.addEventListener("contextmenu", (e) => {
     e.preventDefault()
 })

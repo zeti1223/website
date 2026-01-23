@@ -1,43 +1,43 @@
 var vars = {
-    display: document.getElementsByClassName("display-main")[0],
-    displayInfo: document.getElementsByClassName("display-operations")[0],
-    displayInd: document.getElementsByClassName("display-indicate")[0],
-    ac: document.getElementsByClassName("ac")[0],
-    ce: document.getElementsByClassName("ce")[0],
-    div: document.getElementsByClassName("div")[0],
-    mult: document.getElementsByClassName("mult")[0],
-    minus: document.getElementsByClassName("minus")[0],
-    plus: document.getElementsByClassName("plus")[0],
-    eq: document.getElementsByClassName("eq")[0],
-    dot: document.getElementsByClassName("dot")[0],
-    zero: document.getElementsByClassName("zero")[0],
-    one: document.getElementsByClassName("one")[0],
-    two: document.getElementsByClassName("two")[0],
-    three: document.getElementsByClassName("three")[0],
-    four: document.getElementsByClassName("four")[0],
-    five: document.getElementsByClassName("five")[0],
-    six: document.getElementsByClassName("six")[0],
-    seven: document.getElementsByClassName("seven")[0],
-    eight: document.getElementsByClassName("eight")[0],
-    nine: document.getElementsByClassName("nine")[0]
-  }
-  //hundlers
+  display: document.getElementsByClassName("display-main")[0],
+  displayInfo: document.getElementsByClassName("display-operations")[0],
+  displayInd: document.getElementsByClassName("display-indicate")[0],
+  ac: document.getElementsByClassName("ac")[0],
+  ce: document.getElementsByClassName("ce")[0],
+  div: document.getElementsByClassName("div")[0],
+  mult: document.getElementsByClassName("mult")[0],
+  minus: document.getElementsByClassName("minus")[0],
+  plus: document.getElementsByClassName("plus")[0],
+  eq: document.getElementsByClassName("eq")[0],
+  dot: document.getElementsByClassName("dot")[0],
+  zero: document.getElementsByClassName("zero")[0],
+  one: document.getElementsByClassName("one")[0],
+  two: document.getElementsByClassName("two")[0],
+  three: document.getElementsByClassName("three")[0],
+  four: document.getElementsByClassName("four")[0],
+  five: document.getElementsByClassName("five")[0],
+  six: document.getElementsByClassName("six")[0],
+  seven: document.getElementsByClassName("seven")[0],
+  eight: document.getElementsByClassName("eight")[0],
+  nine: document.getElementsByClassName("nine")[0]
+}
+//hundlers
 
 for (var btn in vars) {
   if (btn === "display" || btn === "displayInfo" || btn === "displayInd") continue;
-  (function(button) {
-    vars[button].addEventListener("click", function() {
+  (function (button) {
+    vars[button].addEventListener("click", function () {
       calculate(button);
     });
 
     if (button === "ac" || button === "ce" || button === "eq") {
-      document.addEventListener("keyup", function(event) {
-        if(button === getChar(event, true)){
-          calculate(getChar(event,true))
+      document.addEventListener("keyup", function (event) {
+        if (button === getChar(event, true)) {
+          calculate(getChar(event, true))
         }
       });
     } else {
-      document.addEventListener("keypress", function(event) {
+      document.addEventListener("keypress", function (event) {
         if (toStr(button) === getChar(event)) {
           calculate(getChar(event), true);
         }
@@ -48,11 +48,11 @@ for (var btn in vars) {
 
 function getChar(event, add) {
   var keyMap = {
-    13 : "eq",
-    35 : "ce",
-    46 : "ac"
+    13: "eq",
+    35: "ce",
+    46: "ac"
   };
-  
+
   if (add) {
     return keyMap[event.which];
   } else {
@@ -176,12 +176,12 @@ function removeLast(str) {
 }
 
 var max = {
-  add: function() {
+  add: function () {
     if (!vars.displayInd.classList.toggle("max")) {
       vars.displayInd.classList.toggle("max");
     }
   },
-  remove: function() {
+  remove: function () {
     if (vars.displayInd.classList.toggle("max")) {
       vars.displayInd.classList.toggle("max");
     }
@@ -251,7 +251,7 @@ function calculate(btn, isFromKey) {
 }
 
 var colors = ["pink", "lightblue"];
-function getBinaryRnd (){
+function getBinaryRnd() {
   var rnd = Math.random();
   if (rnd > 0.5) return 1;
   else return 0;

@@ -144,17 +144,17 @@ function collision(head) {
 }
 
 document.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowUp" && dy === 0) {
-      dx = 0;
-      dy = -tileSize;
-    } else if (e.key === "ArrowDown" && dy === 0) {
-      dx = 0;
-      dy = tileSize;
-    } else if (e.key === "ArrowLeft" && dx === 0) {
-      dx = -tileSize;
-      dy = 0;
-    } else if (e.key === "ArrowRight" && dx === 0) {
-      dx = tileSize;
-      dy = 0;
-    }
-  });
+  if (e.key === "ArrowUp" && dy === 0) {
+    dx = 0;
+    dy = -tileSize;
+  } else if (e.key === "ArrowDown" && dy === 0) {
+    dx = 0;
+    dy = tileSize;
+  } else if (e.key === "ArrowLeft" && dx === 0) {
+    dx = -tileSize;
+    dy = 0;
+  } else if (e.key === "ArrowRight" && dx === 0) {
+    dx = tileSize;
+    dy = 0;
+  }
+});
