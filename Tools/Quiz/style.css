@@ -1,6 +1,7 @@
 body {
     font-family: tahom, sans-serif;
-    background-color: #f4f4f4;
+    background-color: var(--ctp-mocha-base);
+    color: var(--ctp-mocha-text);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,7 +10,7 @@ body {
 }
 
 .quiz-container {
-    background-color: white;
+    background-color: var(--ctp-mocha-surface0);
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 400px;
@@ -30,16 +31,17 @@ li {
     margin: 10px 0;
 }
 
+input[type="radio"] {
+    margin-right: 10px;
+    accent-color: var(--ctp-mocha-teal);
+}
+
+
 button {
-    background-color: #2A629A;
-    color: white;
+    background-color: var(--ctp-mocha-teal);
     border: none;
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 5px;
     font-size: 16px;
-}
-
-button:hover {
-    background-color: #003285;
 }
