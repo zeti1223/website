@@ -20,6 +20,14 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
+async function hashPassword(string) {
+  const utf8 = new TextEncoder().encode(string);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray.map((bytes) => bytes.toString(16).padStart(2, '0')).join('');
+  return hashHex;
+}
+
 document
   .getElementById("login-form")
   .addEventListener("submit", async function (event) {
@@ -33,7 +41,8 @@ document
       const snapshot = await get(ref(db, "users/" + username));
       if (snapshot.exists()) {
         const userData = snapshot.val();
-        if (userData.password === password) {
+        const hashedPassword = await hashPassword(password);
+        if (userData.password === hashedPassword) {
           localStorage.setItem("loggedInUser", username);
           window.location.href = userData.redirect;
           return;
