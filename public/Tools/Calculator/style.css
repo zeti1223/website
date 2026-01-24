@@ -1,15 +1,15 @@
 body {
-  background: lightblue;
   font-family: Arial, sans-serif;
   transition: background 0.1s;
-  background-color: #000 !important;
+  background-color: var(--ctp-mocha-base) !important;
+    color: var(--ctp-mocha-text) !important; 
 }
 
 .calc {
   font-family: Arial, sans-serif;
   text-rendering: geometricPrecision;
   width: 260px;
-  background: grey;
+  background-color: var(--ctp-mocha-surface0);
   margin: 100px auto 0 auto;
   border-radius: 5px;
   box-shadow:
@@ -20,7 +20,6 @@ body {
 
 .display {
   font-family: "Roboto Condensed", sans-serif;
-  color: rgba(255, 255, 255, 0.8);
   background: rgba(0, 0, 0, 0.6);
   font-size: 35px;
   padding: 10px;
@@ -34,7 +33,7 @@ body {
 .header .titles {
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: rgba(0, 0, 0, 0.45);
+  color: var(--ctp-mocha-subtext1);
   font-size: 10px;
   font-weight: bold;
   margin-top: -8px;
@@ -50,7 +49,7 @@ body {
 
 .display-indicate {
   font-size: 10px;
-  color: rgba(255, 255, 255, 0.05);
+  color: color-mix(in srgb, var(--ctp-mocha-subtext0) 30%, black);;
   text-align: left;
   margin: -5px 0 -2px -5px;
   text-transform: uppercase;
@@ -59,12 +58,12 @@ body {
 }
 
 .max {
-  color: rgba(255, 150, 150, 0.8);
+  color: var(--ctp-mocha-red);
 }
 
 .display-operations {
   font-size: 15px;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--ctp-mocha-subtext0);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 3px;
   margin-top: 4px;
@@ -91,7 +90,7 @@ body {
   position: relative;
   top: 0;
   height: 41px;
-  color: rgba(0, 0, 0, 0.6);
+  color: var(--ctp-mocha-text);
   font-size: 16px;
   font-family: "Arial Bold", Gadget, Arial, sans-serif;
   font-weight: 700;
@@ -100,24 +99,17 @@ body {
   border-radius: 2px;
   float: left;
   width: 56px;
-  background: rgba(255, 255, 255, 0.8);
+  background: var(--ctp-mocha-surface2);
   margin-left: 12px;
   text-transform: uppercase;
   border: 0;
-  box-shadow:
-    0 1px 1px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
   transition: all 0.1s;
   cursor: pointer;
   user-select: none;
 }
 
 .button:hover {
-  box-shadow:
-    0 2px 6px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  background: rgba(255, 255, 255, 0.95);
-  color: rgba(0, 0, 0, 0.8);
+  background: var(--ctp-mocha-surface1);
 }
 
 .button:active {
@@ -133,12 +125,13 @@ body {
 
 .ac,
 .ce {
-  background: #ff8a80;
+  color: var(--ctp-mocha-base);
+  background: var(--ctp-mocha-teal);
 }
 
 .ac:hover,
 .ce:hover {
-  background: #ff5252;
+  background: color-mix(in srgb, var(--ctp-mocha-teal) 80%, black);
 }
 
 .minus {

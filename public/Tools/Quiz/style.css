@@ -44,3 +44,7 @@ button {
   border-radius: 5px;
   font-size: 16px;
 }
+
+button:hover {
+  background: color-mix(in srgb, var(--ctp-mocha-teal) 80%, black);
+}
