@@ -69,8 +69,7 @@
 
                 <form id="photo-form" class="space-y-5">
                     <div>
-                        <label for="class_id" class="block text-sm font-medium text-gray-300 mb-1">Osztály (pl.
-                            10D)</label>
+                        <label for="class_id" class="block text-sm font-medium text-gray-300 mb-1">Osztály</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <i class="material-icons text-gray-400">school</i>
@@ -200,10 +199,48 @@
         document.getElementById('photo-form').addEventListener('submit', (e) => {
             e.preventDefault();
 
-            const classId = document.getElementById('class_id').value;
+            let classId = document.getElementById('class_id').value;
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
+            let phone = document.getElementById('phone').value;
+
+            let cleanPhone = phone.replace(/\D/g, '');
+            if (cleanPhone.startsWith('06')) {
+                cleanPhone = '36' + cleanPhone.substring(2);
+            } else if (cleanPhone.length === 9) {
+                cleanPhone = '36' + cleanPhone;
+            }
+            if (cleanPhone.length === 11 && cleanPhone.startsWith('36')) {
+                phone = `+${cleanPhone.substring(0, 2)} ${cleanPhone.substring(2, 4)} ${cleanPhone.substring(4, 7)} ${cleanPhone.substring(7)}`;
+            }
+
+            const classNumMatch = classId.match(/\d+/);
+            const classLetterMatch = classId.match(/[a-zA-Z]/);
+
+            if (!classNumMatch || !classLetterMatch) {
+                showToast('Hibás osztály formátum! (pl. 9. B)', 'error');
+                return;
+            }
+
+            const grade = parseInt(classNumMatch[0]);
+            const letter = classLetterMatch[0].toUpperCase();
+
+            if (grade < 5 || grade > 12) {
+                showToast('Az osztály 5 és 12 között lehet!', 'error');
+                return;
+            }
+
+            if (grade >= 5 && grade <= 8) {
+                if (letter !== 'E') {
+                    showToast('5-8. osztályig csak E osztály lehet!', 'error');
+                    return;
+                }
+            } else if (!['A', 'B', 'C', 'D', 'E'].includes(letter)) {
+                showToast('9-12. osztályig A-E osztály lehet!', 'error');
+                return;
+            }
+
+            classId = `${grade}. ${letter}`;
 
             const newEntryRef = push(ref(db, 'valentine_photos'));
             set(newEntryRef, {

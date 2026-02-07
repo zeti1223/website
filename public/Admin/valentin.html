@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentin Fotózás - Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="antialiased bg-gray-900 text-gray-200 font-sans">
+
+    <div class="container mx-auto px-4 sm:px-8 py-8">
+        <div class="py-4 text-center">
+            <h1 class="text-3xl font-bold leading-tight text-teal-400">Valentin Napi Fotózás - Admin Panel</h1>
+        </div>
+
+        <div class="mb-4">
+            <input type="text" id="search-input" placeholder="Keresés név, osztály vagy email alapján..."
+                class="w-full p-2 bg-gray-700 border border-gray-600 rounded text-gray-200 focus:outline-none focus:border-teal-400">
+        </div>
+
+        <div class="bg-gray-800 shadow-lg rounded-lg overflow-auto">
+            <table class="min-w-full leading-normal">
+                <thead>
+                    <tr>
+                        <th class="px-5 py-3 border-b-2 border-gray-700 bg-gray-700 text-left text-xs font-semibold text-teal-400 uppercase tracking-wider cursor-pointer hover:text-white"
+                            data-sort="studentName">
+                            Név
+                        </th>
+                        <th class="px-5 py-3 border-b-2 border-gray-700 bg-gray-700 text-left text-xs font-semibold text-teal-400 uppercase tracking-wider cursor-pointer hover:text-white"
+                            data-sort="studentClass">
+                            Osztály
+                        </th>
+                        <th class="px-5 py-3 border-b-2 border-gray-700 bg-gray-700 text-left text-xs font-semibold text-teal-400 uppercase tracking-wider cursor-pointer hover:text-white"
+                            data-sort="photographer">
+                            Fotós
+                        </th>
+                        <th class="px-5 py-3 border-b-2 border-gray-700 bg-gray-700 text-left text-xs font-semibold text-teal-400 uppercase tracking-wider cursor-pointer hover:text-white"
+                            data-sort="timestamp">
+                            Időpont
+                        </th>
+                        <th class="px-5 py-3 border-b-2 border-gray-700 bg-gray-700 text-left text-xs font-semibold text-teal-400 uppercase tracking-wider cursor-pointer hover:text-white"
+                            data-sort="editingStatus">
+                            Szerkesztés
+                        </th>
+                        <th class="px-5 py-3 border-b-2 border-gray-700 bg-gray-700 text-left text-xs font-semibold text-teal-400 uppercase tracking-wider cursor-pointer hover:text-white"
+                            data-sort="sentStatus">
+                            Elküldve
+                        </th>
+                        <th class="px-5 py-3 border-b-2 border-gray-700 bg-gray-700 text-left text-xs font-semibold text-teal-400 uppercase tracking-wider cursor-pointer hover:text-white"
+                            data-sort="studentEmail">
+                            Email
+                        </th>
+                        <th class="px-5 py-3 border-b-2 border-gray-700 bg-gray-700 text-left text-xs font-semibold text-teal-400 uppercase tracking-wider cursor-pointer hover:text-white"
+                            data-sort="studentPhone">
+                            Telefon
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="photos-table-body">
+                    <!-- Rows will be inserted here by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA9pr29fe_2qOINUTnWdJxbLzcU4gRjttU",
+            authDomain: "zeti1223.firebaseapp.com",
+            databaseURL: "https://zeti1223-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "zeti1223",
+            storageBucket: "zeti1223.firebasestorage.app",
+            messagingSenderId: "556059487179",
+            appId: "1:556059487179:web:eff9cd64fe2154de12244e",
+            measurementId: "G-WFE315SDXZ",
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        let allData = [];
+        let currentSort = { key: 'timestamp', direction: 'desc' };
+        let searchTerm = '';
+
+        const photosRef = ref(db, 'valentine_photos');
+
+        onValue(photosRef, (snapshot) => {
+            const data = snapshot.val();
+            allData = [];
+            if (data) {
+                Object.entries(data).forEach(([key, value]) => {
+                    allData.push({ ...value, key: key });
+                });
+            }
+            renderTable();
+        });
+
+        function renderTable() {
+            const tableBody = document.getElementById('photos-table-body');
+            tableBody.innerHTML = '';
+
+            let filteredData = allData.filter(item => {
+                const term = searchTerm.toLowerCase();
+                return (item.studentName && item.studentName.toLowerCase().includes(term)) ||
+                    (item.studentClass && item.studentClass.toLowerCase().includes(term)) ||
+                    (item.studentEmail && item.studentEmail.toLowerCase().includes(term));
+            });
+
+            filteredData.sort((a, b) => {
+                let valA = a[currentSort.key] ?? '';
+                let valB = b[currentSort.key] ?? '';
+
+                if (currentSort.key === 'studentClass') {
+                    const gradeA = parseInt(valA) || 0;
+                    const gradeB = parseInt(valB) || 0;
+                    if (gradeA !== gradeB) {
+                        return currentSort.direction === 'asc' ? gradeA - gradeB : gradeB - gradeA;
+                    }
+                }
+
+                if (typeof valA === 'number' && typeof valB === 'number') {
+                    return currentSort.direction === 'asc' ? valA - valB : valB - valA;
+                }
+
+                valA = valA.toString().toLowerCase();
+                valB = valB.toString().toLowerCase();
+
+                if (valA < valB) return currentSort.direction === 'asc' ? -1 : 1;
+                if (valA > valB) return currentSort.direction === 'asc' ? 1 : -1;
+                return 0;
+            });
+
+            if (filteredData.length > 0) {
+                filteredData.forEach((value) => {
+                    const row = document.createElement('tr');
+                    row.setAttribute('data-key', value.key);
+                    row.className = "odd:bg-gray-800 even:bg-gray-700 transition-colors duration-200";
+
+                    let editingStatus = value.editingStatus;
+                    if (editingStatus === 'Nincs elkezdve' || !editingStatus) editingStatus = 'not_started';
+                    else if (editingStatus === 'Folyamatban') editingStatus = 'in_progress';
+                    else if (editingStatus === 'Kész') editingStatus = 'done';
+
+                    const isSent = value.sentStatus || false;
+
+                    let photographerName = value.photographer;
+                    if (photographerName === 'zeti') photographerName = 'Zétény';
+                    else if (photographerName === 'levi') photographerName = 'Levente';
+
+                    row.innerHTML = `
+                        <td class="px-5 py-4 border-b border-gray-700 text-sm">${value.studentName}</td>
+                        <td class="px-5 py-4 border-b border-gray-700 text-sm">${value.studentClass}</td>
+                        <td class="px-5 py-4 border-b border-gray-700 text-sm">${photographerName}</td>
+                        <td class="px-5 py-4 border-b border-gray-700 text-sm">${value.readableTime}</td>
+                        <td class="px-5 py-4 border-b border-gray-700 text-sm">
+                            <select class="editing-status-select p-1 bg-gray-600 border-gray-500 rounded text-white focus:ring-teal-500 focus:border-teal-500">
+                                <option value="not_started" ${editingStatus === 'not_started' ? 'selected' : ''}>Nincs elkezdve</option>
+                                <option value="in_progress" ${editingStatus === 'in_progress' ? 'selected' : ''}>Folyamatban</option>
+                                <option value="done" ${editingStatus === 'done' ? 'selected' : ''}>Kész</option>
+                            </select>
+                        </td>
+                        <td class="px-5 py-4 border-b border-gray-700 text-sm">
+                            <input type="checkbox" class="sent-status-checkbox h-5 w-5 text-teal-500 bg-gray-600 border-gray-500 rounded focus:ring-teal-500" ${isSent ? 'checked' : ''}>
+                        </td>
+                        <td class="px-5 py-4 border-b border-gray-700 text-sm">
+                            <a href="mailto:${value.studentEmail}" class="text-teal-400 hover:underline">${value.studentEmail}</a>
+                        </td>
+                        <td class="px-5 py-4 border-b border-gray-700 text-sm">${value.studentPhone}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } else {
+                tableBody.innerHTML = '<tr><td colspan="8" class="text-center py-10">Nincs találat.</td></tr>';
+            }
+            addEventListenersToControls();
+        }
+
+        function addEventListenersToControls() {
+            document.querySelectorAll('.editing-status-select').forEach(select => {
+                select.addEventListener('change', (e) => {
+                    const key = e.target.closest('tr').dataset.key;
+                    const newStatus = e.target.value;
+                    const photoUpdateRef = ref(db, `valentine_photos/${key}`);
+                    update(photoUpdateRef, { editingStatus: newStatus });
+                });
+            });
+
+            document.querySelectorAll('.sent-status-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', (e) => {
+                    const key = e.target.closest('tr').dataset.key;
+                    const newStatus = e.target.checked;
+
+                    if (newStatus) {
+                        if (confirm("Biztosan elküldted a képeket?")) {
+                            const photoUpdateRef = ref(db, `valentine_photos/${key}`);
+                            update(photoUpdateRef, { sentStatus: newStatus });
+                        } else {
+                            e.target.checked = false;
+                        }
+                    } else {
+                        const photoUpdateRef = ref(db, `valentine_photos/${key}`);
+                        update(photoUpdateRef, { sentStatus: newStatus });
+                    }
+                });
+            });
+        }
+
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            searchTerm = e.target.value;
+            renderTable();
+        });
+
+        document.querySelectorAll('th[data-sort]').forEach(th => {
+            th.addEventListener('click', () => {
+                const key = th.dataset.sort;
+                if (currentSort.key === key) {
+                    currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+                } else {
+                    currentSort.key = key;
+                    currentSort.direction = 'asc';
+                }
+                renderTable();
+            });
+        });
+    </script>
+    <script>
+        if (localStorage.getItem("loggedInUser") !== "admin") {
+            window.location.href = "../Login.html";
+        }
+    </script>
+</body>
+
+</html>
