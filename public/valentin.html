@@ -59,7 +59,7 @@
 
     <div class="container mx-auto px-4 pt-8 max-w-lg" id="main-content" style="display: none;">
         <div class="text-center mb-8 text-teal-400">
-            <h5 class="text-2xl font-bold mb-2">Valentin napi fotózás</h5>
+            <h5 class="text-2xl font-bold mb-2">Tavaszi bál fotózás</h5>
             <p class="text-lg">Fotós: <b id="photographer-name" class="font-bold">...</b></p>
         </div>
 
@@ -101,17 +101,6 @@
                             <input id="email" type="email"
                                 class="pl-10 block w-full rounded-lg border-gray-600 border bg-gray-700 text-white focus:bg-gray-600 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 p-2.5 outline-none transition"
                                 required>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label for="phone" class="block text-sm font-medium text-gray-300 mb-1">Telefonszám</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i class="material-icons text-gray-400">phone</i>
-                            </div>
-                            <input id="phone" type="tel"
-                                class="pl-10 block w-full rounded-lg border-gray-600 border bg-gray-700 text-white focus:bg-gray-600 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 p-2.5 outline-none transition">
                         </div>
                     </div>
 
@@ -201,17 +190,7 @@
             let classId = document.getElementById('class_id').value;
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
-            let phone = document.getElementById('phone').value;
 
-            let cleanPhone = phone.replace(/\D/g, '');
-            if (cleanPhone.startsWith('06')) {
-                cleanPhone = '36' + cleanPhone.substring(2);
-            } else if (cleanPhone.length === 9) {
-                cleanPhone = '36' + cleanPhone;
-            }
-            if (cleanPhone.length === 11 && cleanPhone.startsWith('36')) {
-                phone = `+${cleanPhone.substring(0, 2)} ${cleanPhone.substring(2, 4)} ${cleanPhone.substring(4, 7)} ${cleanPhone.substring(7)}`;
-            }
 
             const classNumMatch = classId.match(/\d+/);
             const classLetterMatch = classId.match(/[a-zA-Z]/);
@@ -249,7 +228,6 @@
                 studentClass: classId,
                 studentName: name,
                 studentEmail: email,
-                studentPhone: phone
             }).then(() => {
                 showToast('Sikeres mentés! 📸', 'success');
                 document.getElementById('photo-form').reset();
