@@ -1,0 +1,273 @@
+<!doctype html>
+<html>
+  <head>
+    <title>About - Zétény</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@catppuccin/palette@latest/css/catppuccin.css"
+    />
+    <link rel="website icon" type="png" href="../Icon/main.png" />
+
+    <style>
+      body {
+        background-color: var(--ctp-mocha-base);
+        color: var(--ctp-mocha-text);
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 20px;
+        min-height: 100vh;
+        box-sizing: border-box;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .back-button {
+        display: inline-block;
+        background-color: var(--ctp-mocha-teal);
+        color: var(--ctp-mocha-base);
+        text-decoration: none;
+        padding: 12px 24px;
+        border-radius: 12px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        transition: transform 0.2s;
+      }
+
+      .back-button:hover {
+        transform: scale(1.03);
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .name {
+        font-size: 3rem;
+        font-weight: bold;
+        color: var(--ctp-mocha-teal);
+        margin: 0;
+      }
+
+      .tagline {
+        font-size: 1.5rem;
+        color: var(--ctp-mocha-subtext0);
+        margin: 10px 0;
+      }
+
+      .desc {
+        font-size: 1.1rem;
+        color: var(--ctp-mocha-overlay0);
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .section {
+        background-color: var(--ctp-mocha-surface0);
+        border-radius: 12px;
+        padding: 25px;
+        margin-bottom: 20px;
+      }
+
+      .section-title {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: var(--ctp-mocha-teal);
+        margin-bottom: 15px;
+      }
+
+      .about-content {
+        line-height: 1.6;
+      }
+
+      .social-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .social-link {
+        background-color: var(--ctp-mocha-teal);
+        color: var(--ctp-mocha-base);
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: bold;
+        transition: transform 0.2s;
+      }
+
+      .social-link:hover {
+        transform: scale(1.05);
+      }
+
+      .repos {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .repo-link {
+        background-color: var(--ctp-mocha-surface1);
+        color: var(--ctp-mocha-text);
+        text-decoration: none;
+        padding: 15px;
+        border-radius: 8px;
+        transition: background-color 0.2s;
+      }
+
+      .repo-link:hover {
+        background-color: var(--ctp-mocha-surface2);
+      }
+
+      .contact-info {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .contact-label {
+        font-weight: bold;
+        color: var(--ctp-mocha-teal);
+        min-width: 80px;
+      }
+
+      @media (max-width: 768px) {
+        .name {
+          font-size: 2rem;
+        }
+        .tagline {
+          font-size: 1.2rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <a href="../index.html" class="back-button">← Back</a>
+
+      <div class="header">
+        <h1 class="name">Zétény</h1>
+        <p class="tagline">Frontend & Arduino Developer</p>
+        <p class="desc">
+          I'm passionate about building modern, user-friendly web interfaces. I
+          specialize in frontend development and writing clean code.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-content">
+          <p>
+            Welcome to my portfolio! I am a software developer who loves learning
+            new technologies. I mainly work with JavaScript and Python, and I'm
+            currently learning Lua.
+          </p>
+          <br />
+          <p>
+            When I'm not coding, I like contributing to open source projects or
+            reading tech articles.
+          </p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Contact</h2>
+        <div class="contact-info">
+          <div class="contact-item">
+            <span class="contact-label">Email:</span>
+            <a href="mailto:zeteny@cigoria.eu" style="color: var(--ctp-mocha-teal)"
+              >zeteny@cigoria.eu</a
+            >
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">Test website (Hungarian):</span>
+            <a
+              href="https://test.cigoria.eu"
+              target="_blank"
+              style="color: var(--ctp-mocha-teal)"
+              >test.cigoria.eu</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Social Media</h2>
+        <div class="social-links">
+          <a
+            href="https://github.com/zeti1223"
+            target="_blank"
+            class="social-link"
+            >GitHub</a
+          >
+          <a
+            href="https://facebook.com/Zeti1223"
+            target="_blank"
+            class="social-link"
+            >Facebook</a
+          >
+          <a
+            href="https://youtube.com/@Zeti_1223-offical"
+            target="_blank"
+            class="social-link"
+            >YouTube</a
+          >
+          <a
+            href="https://unsplash.com/@zeti_1223"
+            target="_blank"
+            class="social-link"
+            >Unsplash</a
+          >
+          <a
+            href="https://reddit.com/user/Zeti_1223"
+            target="_blank"
+            class="social-link"
+            >Reddit</a
+          >
+          <a
+            href="https://codepen.io/zeti1223"
+            target="_blank"
+            class="social-link"
+            >CodePen</a
+          >
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Projects</h2>
+        <div class="repos">
+          <a
+            href="https://github.com/cigoria/simpleShare"
+            target="_blank"
+            class="repo-link"
+            >cigoria/simpleShare</a
+          >
+          <a
+            href="https://github.com/zeti1223/LED-Matrix-Display"
+            target="_blank"
+            class="repo-link"
+            >zeti1223/LED-Matrix-Display</a
+          >
+          <a
+            href="https://github.com/zeti1223/website"
+            target="_blank"
+            class="repo-link"
+            >zeti1223/website</a
+          >
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
