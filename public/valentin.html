@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentin Napi Fotózás</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+
+        .toast-enter {
+            animation: slideIn 0.3s ease-out forwards;
+        }
+
+        .toast-exit {
+            animation: fadeOut 0.3s ease-in forwards;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900 min-h-screen font-sans text-gray-100">
+
+    <div id="toast-container" class="fixed top-5 right-5 z-[100] flex flex-col gap-3"></div>
+
+    <div id="identity-overlay"
+        class="fixed inset-0 bg-gray-900 z-50 flex flex-col justify-center items-center text-white">
+        <h3 class="text-3xl font-bold mb-8">Ki vagy?</h3>
+        <div class="flex flex-col gap-4 sm:flex-row">
+            <button
+                class="w-48 py-4 text-xl font-semibold rounded-full bg-teal-600 hover:bg-teal-500 transition shadow-lg transform hover:scale-105"
+                onclick="setIdentity('levi')">Levi</button>
+            <button
+                class="w-48 py-4 text-xl font-semibold rounded-full bg-teal-600 hover:bg-teal-500 transition shadow-lg transform hover:scale-105"
+                onclick="setIdentity('zeti')">Zeti</button>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 pt-8 max-w-lg" id="main-content" style="display: none;">
+        <div class="text-center mb-8 text-teal-400">
+            <h5 class="text-2xl font-bold mb-2">Tavaszi bál fotózás</h5>
+            <p class="text-lg">Fotós: <b id="photographer-name" class="font-bold">...</b></p>
+        </div>
+
+        <div class="bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
+            <div class="p-8">
+                <span class="block text-xl font-semibold text-center text-white mb-6">Új fotó rögzítése</span>
+
+                <form id="photo-form" class="space-y-5">
+                    <div>
+                        <label for="class_id" class="block text-sm font-medium text-gray-300 mb-1">Osztály</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="material-icons text-gray-400">school</i>
+                            </div>
+                            <input id="class_id" type="text"
+                                class="pl-10 block w-full rounded-lg border-gray-600 border bg-gray-700 text-white focus:bg-gray-600 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 p-2.5 outline-none transition"
+                                required>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-300 mb-1">Név</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="material-icons text-gray-400">person</i>
+                            </div>
+                            <input id="name" type="text"
+                                class="pl-10 block w-full rounded-lg border-gray-600 border bg-gray-700 text-white focus:bg-gray-600 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 p-2.5 outline-none transition"
+                                required>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email cím</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="material-icons text-gray-400">email</i>
+                            </div>
+                            <input id="email" type="email"
+                                class="pl-10 block w-full rounded-lg border-gray-600 border bg-gray-700 text-white focus:bg-gray-600 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 p-2.5 outline-none transition"
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="pt-4">
+                        <button
+                            class="w-full py-3 px-6 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-full shadow-lg transition transform active:scale-95 flex justify-center items-center gap-2"
+                            type="submit">
+                            Mentés <i class="material-icons text-sm">save</i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        window.location.href = "index.html";
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+
+        const firebaseConfig = {
+        apiKey: "AIzaSyA9pr29fe_2qOINUTnWdJxbLzcU4gRjttU",
+        authDomain: "zeti1223.firebaseapp.com",
+        databaseURL:
+            "https://zeti1223-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "zeti1223",
+        storageBucket: "zeti1223.firebasestorage.app",
+        messagingSenderId: "556059487179",
+        appId: "1:556059487179:web:eff9cd64fe2154de12244e",
+        measurementId: "G-WFE315SDXZ",
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        let currentPhotographer = "";
+
+        window.showToast = function (message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            const bgColor = type === 'success' ? 'bg-green-500' : 'bg-red-500';
+            const icon = type === 'success' ? 'check_circle' : 'error';
+
+            toast.className = `toast-enter ${bgColor} text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-3 min-w-[250px] max-w-sm`;
+            toast.innerHTML = `
+                <i class="material-icons">${icon}</i>
+                <span class="font-medium">${message}</span>
+            `;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('toast-enter');
+                toast.classList.add('toast-exit');
+                toast.addEventListener('animationend', () => {
+                    toast.remove();
+                });
+            }, 3000);
+        }
+
+        window.checkIdentity = function () {
+            const hash = window.location.hash;
+            if (hash === '#levi' || hash === '#zeti') {
+                currentPhotographer = hash.substring(1);
+                document.getElementById('identity-overlay').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+
+                const nameDisplay = currentPhotographer.charAt(0).toUpperCase() + currentPhotographer.slice(1);
+                document.getElementById('photographer-name').textContent = nameDisplay;
+            } else {
+                document.getElementById('identity-overlay').style.display = 'flex';
+                document.getElementById('main-content').style.display = 'none';
+            }
+        }
+
+        window.setIdentity = function (name) {
+            window.location.hash = name;
+            checkIdentity();
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            checkIdentity();
+        });
+
+        document.getElementById('photo-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            let classId = document.getElementById('class_id').value;
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+
+
+            const classNumMatch = classId.match(/\d+/);
+            const classLetterMatch = classId.match(/[a-zA-Z]/);
+
+            if (!classNumMatch || !classLetterMatch) {
+                showToast('Hibás osztály formátum! (pl. 9. B)', 'error');
+                return;
+            }
+
+            const grade = parseInt(classNumMatch[0]);
+            const letter = classLetterMatch[0].toUpperCase();
+
+            if (grade < 5 || grade > 12) {
+                showToast('Az osztály 5 és 12 között lehet!', 'error');
+                return;
+            }
+
+            if (grade >= 5 && grade <= 8) {
+                if (letter !== 'E') {
+                    showToast('5-8. osztályig csak E osztály lehet!', 'error');
+                    return;
+                }
+            } else if (!['A', 'B', 'C', 'D', 'E'].includes(letter)) {
+                showToast('9-12. osztályig A-E osztály lehet!', 'error');
+                return;
+            }
+
+            classId = `${grade}. ${letter}`;
+
+            const newEntryRef = push(ref(db, 'valentine_photos'));
+            set(newEntryRef, {
+                photographer: currentPhotographer,
+                timestamp: Date.now(),
+                readableTime: new Date().toLocaleString('hu-HU'),
+                studentClass: classId,
+                studentName: name,
+                studentEmail: email,
+            }).then(() => {
+                showToast('Sikeres mentés! 📸', 'success');
+                document.getElementById('photo-form').reset();
+            }).catch((error) => {
+                showToast('Hiba történt: ' + error.message, 'error');
+            });
+        });
+    </script>
+</body>
+
+</html>

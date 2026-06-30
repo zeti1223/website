@@ -11,6 +11,10 @@ A classic tools website featuring various utilities and games.
 - **Prettier** - Code formatting
 - **TailwindCSS** - Utility-first CSS framework
 
+## AI Usage
+
+Nothing
+
 ## Getting Started
 
 ### Prerequisites
