@@ -1,37 +1,84 @@
-<!doctype html>
-<html>
-
+<!DOCTYPE html>
+<html lang="hu">
 <head>
   <title>To-Do List</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="website icon" type="png" href="../../Icon/todo.png" />
-  <link rel="stylesheet" href="https://unpkg.com/@catppuccin/palette@latest/css/catppuccin.css" />
+  <link rel="website icon" type="image/png" href="../../Icon/main.png"/>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
-    body {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      text-align: center;
-      color: var(--ctp-mocha-text);
-      font-size: 18px;
-      background-color: var(--ctp-mocha-base);
+    :root {
+      --bg-color: #121212;
+      --card-bg: #1e1e1e;
+      --card-border: #333333;
+      --text-main: #e3e3e3;
+      --text-muted: #999999;
+      --accent-purple: #6965db;
+      --accent-teal: #12b886;
+      --accent-orange: #ff922b;
+      --accent-pink: #f06595;
+      --shadow-offset: 4px 4px 0px #000000;
+      --shadow-hover: 6px 6px 0px var(--accent-purple);
+      --font-hand: 'Patrick Hand', cursive, sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
       margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1.5px, transparent 1.5px);
+      background-size: 24px 24px;
+      user-select: none;
       padding: 20px;
     }
 
     .header-actions {
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
+      align-items: center;
       max-width: 500px;
-      margin: 0 auto 10px auto;
+      margin: 0 auto 20px auto;
+      gap: 10px;
     }
 
-    .logout-btn {
-      background-color: var(--ctp-mocha-flamingo);
-      color: var(--ctp-mocha-base);
+    .home-btn, .logout-btn {
+      background: var(--card-bg);
+      color: var(--text-main);
       width: auto;
-      padding: 8px 15px;
-      font-size: 0.9rem;
+      padding: 10px 20px;
+      font-size: 0.95rem;
       margin: 0;
+      border: 2px solid var(--card-border);
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: var(--font-hand);
+      font-weight: 600;
+      box-shadow: 3px 3px 0px #000;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .home-btn:hover, .logout-btn:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0px var(--accent-purple);
+      border-color: var(--accent-purple);
     }
 
     .container {
@@ -43,56 +90,91 @@
     }
 
     h1 {
-      font-size: 2rem;
+      font-family: var(--font-hand);
+      font-size: 2.5rem;
+      font-weight: 700;
       margin-top: 0;
+      margin-bottom: 30px;
+      color: var(--text-main);
+    }
+
+    h1 .highlight {
+      color: var(--accent-purple);
     }
 
     input[type="text"] {
       width: 100%;
-      padding: 12px 20px;
+      padding: 14px 20px;
       margin: 8px 0;
-      background-color: var(--ctp-mocha-surface1);
-      color: var(--ctp-mocha-text);
+      background-color: var(--card-bg);
+      color: var(--text-main);
       box-sizing: border-box;
-      border: 2px solid #ccc;
-      border-radius: 4px;
+      border: 2px solid var(--card-border);
+      border-radius: 10px;
       font-size: 1rem;
+      font-family: var(--font-body);
+      box-shadow: 3px 3px 0px #000;
+      transition: all 0.2s ease;
     }
 
-    button {
-      background-color: var(--ctp-mocha-teal);
+    input[type="text"]:focus {
+      outline: none;
+      border-color: var(--accent-purple);
+      box-shadow: 4px 4px 0px var(--accent-purple);
+    }
+
+    input[type="text"]::placeholder {
+      color: var(--text-muted);
+    }
+
+    button#add-btn {
+      background-color: var(--accent-teal);
+      color: var(--text-main);
       width: 100%;
       padding: 14px 20px;
       margin: 8px 0;
-      border: none;
-      border-radius: 4px;
+      border: 2px solid var(--card-border);
+      border-radius: 10px;
       cursor: pointer;
       font-size: 1.1rem;
       font-weight: bold;
+      font-family: var(--font-hand);
+      box-shadow: 3px 3px 0px #000;
+      transition: all 0.2s ease;
     }
 
-    button:hover {
-      background: color-mix(in srgb, var(--ctp-mocha-teal) 80%, black);
+    button#add-btn:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0px var(--accent-purple);
+      border-color: var(--accent-purple);
     }
 
     ul {
       padding: 0;
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 10px;
+      margin-top: 20px;
     }
 
     li {
       list-style-type: none;
-      border: 2px solid #ccc;
-      border-radius: 4px;
-      background-color: var(--ctp-mocha-surface1);
+      border: 2px solid var(--card-border);
+      border-radius: 10px;
+      background-color: var(--card-bg);
       font-size: 1.1rem;
-      padding: 10px;
-      padding-right: 50px;
+      padding: 14px 50px 14px 16px;
       text-align: left;
       position: relative;
       word-wrap: break-word;
+      box-shadow: 3px 3px 0px #000;
+      transition: all 0.2s ease;
+    }
+
+    li:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0px var(--accent-purple);
+      border-color: var(--accent-purple);
     }
 
     li span {
@@ -102,19 +184,39 @@
       transform: translateY(-50%);
       right: 10px;
       cursor: pointer;
-      padding: 5px;
+      padding: 8px 12px;
+      background: var(--accent-pink);
+      color: var(--text-main);
+      border-radius: 8px;
+      font-family: var(--font-hand);
+      font-size: 0.9rem;
+      border: 2px solid var(--card-border);
+      box-shadow: 2px 2px 0px #000;
+      transition: all 0.2s ease;
+    }
+
+    li span:hover {
+      transform: translateY(-50%) translate(-1px, -1px);
+      box-shadow: 3px 3px 0px var(--accent-purple);
     }
   </style>
 </head>
 
 <body>
   <div class="header-actions">
-    <button class="logout-btn" id="logout-btn">Logout</button>
+    <a href="../../index.html" class="home-btn">
+      <i class="fas fa-home"></i>
+      Back to Home
+    </a>
+    <button class="logout-btn" id="logout-btn">
+      <i class="fas fa-sign-out-alt"></i>
+      Logout
+    </button>
   </div>
   <div class="container">
-    <h1 id="welcome-title">To-Do List</h1>
+    <h1 id="welcome-title"><span class="highlight">To-Do</span> List</h1>
     <input type="text" placeholder="Enter a new task..." />
-    <button id="add-btn">Add</button>
+    <button id="add-btn">Add Task</button>
     <ul id="task-list">
     </ul>
   </div>

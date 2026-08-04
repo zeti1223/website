@@ -47,7 +47,7 @@ async function fetchWeather() {
     const data = await response.json();
 
     if (data.cod == "400" || data.cod == "404") {
-      error.innerHTML = `Nem valós város. Kérjük, adjon meg egy másik várost!`;
+      error.innerHTML = `Invalid city. Please enter a valid city name!`;
       // Show the input field again if the city is not valid
       document.getElementById("cityInput").style.display = "block";
       return;
@@ -78,7 +78,7 @@ function convertToLocalTime(dt) {
 }
 
 function createWeatherDescription(weatherData) {
-  const { main, dt } = weatherData;
+  const { main, dt, weather } = weatherData;
 
   const description = document.createElement("div");
   const convertedDateAndTime = convertToLocalTime(dt);
@@ -88,23 +88,48 @@ function createWeatherDescription(weatherData) {
 
   let isRounded = true;
 
+  // Get weather icon based on condition
+  const weatherIcon = getWeatherIcon(weather[0].main);
+
   description.innerHTML = `
-        <div class="weather_description">${roundedTemp}${temperatureSymobol} - ${convertedDateAndTime}</div>
+        <div class="weather_description">
+          <div class="icon">${weatherIcon}</div>
+          <div class="temp">${roundedTemp}${temperatureSymobol}</div>
+          <div class="time">${convertedDateAndTime}</div>
+        </div>
     `;
 
   // Add event listener to toggle temperature display on click
   description.addEventListener("click", () => {
+    const tempElement = description.querySelector('.temp');
     if (isRounded) {
-      description.innerHTML = `
-                <div class="weather_description">${main.temp}${temperatureSymobol} - ${convertedDateAndTime}</div>
-            `;
+      tempElement.textContent = `${main.temp}${temperatureSymobol}`;
     } else {
-      description.innerHTML = `
-                <div class="weather_description">${roundedTemp}${temperatureSymobol} - ${convertedDateAndTime}</div>
-            `;
+      tempElement.textContent = `${roundedTemp}${temperatureSymobol}`;
     }
     isRounded = !isRounded;
   });
 
   return description;
+}
+
+function getWeatherIcon(weatherMain) {
+  const icons = {
+    'Clear': '<i class="fas fa-sun"></i>',
+    'Clouds': '<i class="fas fa-cloud"></i>',
+    'Rain': '<i class="fas fa-cloud-rain"></i>',
+    'Drizzle': '<i class="fas fa-cloud-showers-heavy"></i>',
+    'Thunderstorm': '<i class="fas fa-bolt"></i>',
+    'Snow': '<i class="fas fa-snowflake"></i>',
+    'Mist': '<i class="fas fa-smog"></i>',
+    'Fog': '<i class="fas fa-smog"></i>',
+    'Haze': '<i class="fas fa-smog"></i>',
+    'Smoke': '<i class="fas fa-smog"></i>',
+    'Dust': '<i class="fas fa-wind"></i>',
+    'Sand': '<i class="fas fa-wind"></i>',
+    'Ash': '<i class="fas fa-fire"></i>',
+    'Squall': '<i class="fas fa-wind"></i>',
+    'Tornado': '<i class="fas fa-tornado"></i>'
+  };
+  return icons[weatherMain] || '<i class="fas fa-temperature-high"></i>';
 }
