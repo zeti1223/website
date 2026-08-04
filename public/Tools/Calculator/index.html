@@ -1,69 +1,79 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title></title>
-    <link rel="stylesheet" type="text/css" href="style.css" />
-    <link rel="stylesheet" href="https://unpkg.com/@catppuccin/palette@latest/css/catppuccin.css"/>
-    <link rel="website icon" type="png" href="../../Icon/calculator.png" />
-  </head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculator</title>
+  <link rel="website icon" type="image/png" href="../../Icon/calculator.png"/>
 
-  <body>
-    <div class="container">
-      <div class="calc">
-        <div class="header">
-          <div class="titles">Simple Calculator</div>
-        </div>
-        <div class="display">
-          <div class="display-indicate">max</div>
-          <div class="display-main">0</div>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-          <div class="display-operations">0</div>
-        </div>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
 
-        <div class="row">
-          <button class="button ac">ac</button>
-          <button class="button ce">ce</button>
-          <button class="button div">÷</button>
-          <button class="button mult">×</button>
-        </div>
+<body>
+  <div class="container">
+    <a href="../../index.html" class="back-btn">
+      <i class="fas fa-arrow-left"></i>
+      Back to Home
+    </a>
+    
+    <div class="calc">
+      <div class="header">
+        <div class="titles">Simple Calculator</div>
+      </div>
+      <div class="display">
+        <div class="display-indicate">max</div>
+        <div class="display-main">0</div>
 
-        <div class="row">
-          <button class="button seven">7</button>
-          <button class="button eight">8</button>
-          <button class="button nine">9</button>
-          <button class="button minus">-</button>
-        </div>
+        <div class="display-operations">0</div>
+      </div>
 
-        <div class="row">
-          <button class="button four">4</button>
-          <button class="button five">5</button>
-          <button class="button six">6</button>
-          <button class="button plus">+</button>
-        </div>
+      <div class="row">
+        <button class="button ac">ac</button>
+        <button class="button ce">ce</button>
+        <button class="button div">÷</button>
+        <button class="button mult">×</button>
+      </div>
 
-        <div class="bottom-row">
-          <div class="left">
-            <div class="row">
-              <button class="button one">1</button>
-              <button class="button two">2</button>
-              <button class="button three">3</button>
-            </div>
+      <div class="row">
+        <button class="button seven">7</button>
+        <button class="button eight">8</button>
+        <button class="button nine">9</button>
+        <button class="button minus">-</button>
+      </div>
 
-            <div class="row">
-              <button class="button zero">0</button>
-              <button class="button dot">.</button>
-            </div>
+      <div class="row">
+        <button class="button four">4</button>
+        <button class="button five">5</button>
+        <button class="button six">6</button>
+        <button class="button plus">+</button>
+      </div>
+
+      <div class="bottom-row">
+        <div class="left">
+          <div class="row">
+            <button class="button one">1</button>
+            <button class="button two">2</button>
+            <button class="button three">3</button>
           </div>
 
-          <div class="right">
-            <div class="button eq">=</div>
+          <div class="row">
+            <button class="button zero">0</button>
+            <button class="button dot">.</button>
           </div>
+        </div>
+
+        <div class="right">
+          <button class="button eq">=</button>
         </div>
       </div>
     </div>
-    <script src="javascript.js"></script>
-    <script src="../inspect.js"></script>
-  </body>
+  </div>
+  <script src="javascript.js"></script>
+  <script src="../inspect.js"></script>
+</body>
 </html>
