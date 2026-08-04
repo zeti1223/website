@@ -105,6 +105,9 @@
       padding: 6px 12px;
       border-radius: 8px;
       transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .nav-links a:hover {
@@ -212,6 +215,13 @@
       font-size: 0.95rem;
       box-shadow: 2px 2px 0px #000;
       transition: all 0.2s ease;
+    }
+
+    .drawer-link img {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      filter:invert();
     }
 
     .drawer-link:hover {
@@ -717,29 +727,29 @@
     <div>
       <div class="drawer-section-title">Tools</div>
       <div class="drawer-links">
-        <a href="Tools/Calculator/index.html" class="drawer-link">Calculator</a>
-        <a href="Tools/To-Do/index.html" class="drawer-link">To-do</a>
-        <a href="Tools/Whiteboard/index.html" class="drawer-link">Whiteboard</a>
-        <a href="Tools/Weather/index.html" class="drawer-link">Weather</a>
-        <a href="Tools/Quiz/index.html" class="drawer-link">Quiz</a>
-        <a href="Tools/Clock/index.html" class="drawer-link">Clock</a>
+        <a href="Tools/Calculator/index.html" class="drawer-link"><img src="Icon/calculator.png" alt="Calculator"> Calculator</a>
+        <a href="Tools/To-Do/index.html" class="drawer-link"><img src="Icon/todo.png" alt="To-do"> To-do</a>
+        <a href="Tools/Whiteboard/index.html" class="drawer-link"><img src="Icon/whiteboard.png" alt="Whiteboard"> Whiteboard</a>
+        <a href="Tools/Weather/index.html" class="drawer-link"><img src="Icon/weather.png" alt="Weather"> Weather</a>
+        <a href="Tools/Quiz/index.html" class="drawer-link"><img src="Icon/quiz.png" alt="Quiz"> Quiz</a>
+        <a href="Tools/Clock/index.html" class="drawer-link"><img src="Icon/clock.png" alt="Clock"> Clock</a>
       </div>
     </div>
 
     <div>
       <div class="drawer-section-title">Games</div>
       <div class="drawer-links">
-        <a href="Games/Pac-Man/index.html" class="drawer-link">Pac-Man</a>
-        <a href="Games/2048/index.html" class="drawer-link">2048</a>
-        <a href="Games/Snake/index.html" class="drawer-link">Snake</a>
+        <a href="Games/Pac-Man/index.html" class="drawer-link"><img src="Icon/games.png" alt="Pac-Man"> Pac-Man</a>
+        <a href="Games/2048/index.html" class="drawer-link"><img src="Icon/games.png" alt="2048"> 2048</a>
+        <a href="Games/Snake/index.html" class="drawer-link"><img src="Icon/games.png" alt="Snake"> Snake</a>
       </div>
     </div>
 
     <div>
       <div class="drawer-section-title">Account</div>
       <div class="drawer-links">
-        <a href="#login" class="drawer-link" id="drawer-auth-link">Login</a>
-        <a href="Admin/index.html" class="drawer-link" id="drawer-admin-link" style="display: none;">Go to admin panel</a>
+        <a href="#login" class="drawer-link" id="drawer-auth-link"><img src="Icon/login.png" alt="Login"> Login</a>
+        <a href="Admin/index.html" class="drawer-link" id="drawer-admin-link" style="display: none;"><img src="Icon/admin.png" alt="Admin"> Go to admin panel</a>
       </div>
     </div>
   </div>
@@ -880,8 +890,8 @@
       }
       
       projectsGrid.innerHTML = projects.map(proj => {
-        const title = proj.title || proj.name || "Projekt";
-        const desc = proj.description || "Nincs megadva leírás.";
+        const title = proj.title || proj.name || "Project";
+        const desc = proj.description || "No description.";
         const url = proj.url || proj.html_url || "https://github.com/zeti1223";
         const image = proj.image || proj.thumbnail || "";
 
