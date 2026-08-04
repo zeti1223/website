@@ -735,10 +735,11 @@
       </div>
     </div>
 
-    <div id="admin-section" style="display: none;">
-      <div class="drawer-section-title">Admin</div>
+    <div>
+      <div class="drawer-section-title">Account</div>
       <div class="drawer-links">
-        <a href="Admin/index.html" class="drawer-link">Go to admin panel</a>
+        <a href="#login" class="drawer-link" id="drawer-auth-link">Login</a>
+        <a href="Admin/index.html" class="drawer-link" id="drawer-admin-link" style="display: none;">Go to admin panel</a>
       </div>
     </div>
   </div>
@@ -768,10 +769,6 @@
         
         <button type="submit" class="login-btn" id="submit-btn">Sign In</button>
       </form>
-      
-      <div class="login-footer">
-        <a href="#">Forgot password?</a>
-      </div>
       
       <div class="login-toggle">
         <button class="login-toggle-btn" id="switch-mode-btn">Don't have an account? Sign up</button>
@@ -931,10 +928,11 @@
 
     function checkAdminAccess() {
       const loggedInUser = localStorage.getItem("loggedInUser");
+      const drawerAdminLink = document.getElementById("drawer-admin-link");
       if (loggedInUser === "admin") {
-        adminSection.style.display = "block";
+        drawerAdminLink.style.display = "flex";
       } else {
-        adminSection.style.display = "none";
+        drawerAdminLink.style.display = "none";
       }
     }
 
@@ -947,6 +945,15 @@
       link.addEventListener("click", () => {
         if (drawerMenu.classList.contains("open")) {
           toggleMenu();
+        }
+      });
+    });
+
+    // Hide login when clicking on nav links
+    document.querySelectorAll(".nav-links a").forEach(link => {
+      link.addEventListener("click", () => {
+        if (loginSection.classList.contains("active")) {
+          hideLogin();
         }
       });
     });
@@ -1060,25 +1067,37 @@
     });
 
     const navLinks = document.querySelector(".nav-links");
-    if (navLinks) {
-      const loginLink = document.createElement("a");
-      loginLink.href = "#login";
-      loginLink.textContent = "Login";
-      loginLink.addEventListener("click", (e) => {
-        e.preventDefault();
-        showLogin();
-      });
-      navLinks.appendChild(loginLink);
+    function updateLoginState() {
+      const loggedInUser = localStorage.getItem("loggedInUser");
+      const authLink = document.getElementById("drawer-auth-link");
+      
+      if (loggedInUser) {
+        authLink.textContent = "Logout";
+        authLink.href = "#";
+      } else {
+        authLink.textContent = "Login";
+        authLink.href = "#login";
+      }
     }
 
-    const drawerLoginLink = document.getElementById("drawer-login-link");
-    if (drawerLoginLink) {
-      drawerLoginLink.addEventListener("click", (e) => {
+    const authLink = document.getElementById("drawer-auth-link");
+    if (authLink) {
+      authLink.addEventListener("click", (e) => {
         e.preventDefault();
-        showLogin();
+        const loggedInUser = localStorage.getItem("loggedInUser");
+        
+        if (loggedInUser) {
+          localStorage.removeItem("loggedInUser");
+          updateLoginState();
+          checkAdminAccess();
+        } else {
+          showLogin();
+        }
         toggleMenu();
       });
     }
+
+    updateLoginState();
   </script>
 </body>
 </html>
