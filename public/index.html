@@ -226,6 +226,170 @@
       margin: 50px 0;
     }
 
+    .login-section {
+      display: none;
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 40px 30px;
+      background: var(--card-bg);
+      border: 2px solid var(--card-border);
+      border-radius: 16px;
+      box-shadow: var(--shadow-offset);
+      transition: all 0.2s ease;
+    }
+
+    .login-section.active {
+      display: block;
+    }
+
+    .login-section:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--accent-purple);
+    }
+
+    .login-title {
+      font-family: var(--font-hand);
+      font-size: 2rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 8px;
+      color: var(--text-main);
+    }
+
+    .login-title .highlight {
+      color: var(--accent-purple);
+    }
+
+    .login-subtitle {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-family: var(--font-hand);
+      font-size: 1.1rem;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: #141414;
+      border: 2px solid var(--card-border);
+      border-radius: 8px;
+      color: var(--text-main);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      transition: all 0.2s ease;
+      box-shadow: 2px 2px 0px #000;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--accent-purple);
+      box-shadow: 2px 2px 0px var(--accent-purple);
+      transform: translate(-1px, -1px);
+    }
+
+    .form-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 14px 20px;
+      background: var(--accent-purple);
+      border: 2px solid var(--accent-purple);
+      border-radius: 8px;
+      color: #fff;
+      font-family: var(--font-hand);
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 3px 3px 0px #000;
+    }
+
+    .login-btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0px var(--accent-teal);
+      background: var(--accent-teal);
+      border-color: var(--accent-teal);
+    }
+
+    .login-btn:active {
+      transform: translate(0, 0);
+      box-shadow: 2px 2px 0px #000;
+    }
+
+    .login-footer {
+      text-align: center;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 2px dashed var(--card-border);
+    }
+
+    .login-footer a {
+      color: var(--accent-purple);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+
+    .login-footer a:hover {
+      color: var(--accent-teal);
+    }
+
+    .login-toggle {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .login-toggle-btn {
+      background: transparent;
+      border: none;
+      color: var(--accent-purple);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+
+    .login-toggle-btn:hover {
+      color: var(--accent-teal);
+    }
+
+    .error-message {
+      display: none;
+      background: rgba(240, 101, 149, 0.15);
+      border: 2px solid var(--accent-pink);
+      border-radius: 8px;
+      padding: 12px 16px;
+      color: var(--accent-pink);
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .error-message.active {
+      display: block;
+    }
+
+    .error-message.success {
+      background: rgba(18, 184, 134, 0.15);
+      border-color: var(--accent-teal);
+      color: var(--accent-teal);
+    }
+
     main {
       max-width: 1100px;
       margin: 0 auto;
@@ -571,9 +735,10 @@
       </div>
     </div>
 
-    <div>
+    <div id="admin-section" style="display: none;">
+      <div class="drawer-section-title">Admin</div>
       <div class="drawer-links">
-        <a href="Login.html" class="drawer-link">Login</a>
+        <a href="Admin/index.html" class="drawer-link">Go to admin panel</a>
       </div>
     </div>
   </div>
@@ -582,6 +747,35 @@
     <section class="hero-section" id="home">
       <h1 class="hero-title">Welcome to my <span class="highlight">website!</span></h1>
       <p class="hero-subtitle">I use arch btw!</p>
+    </section>
+
+    <section class="login-section" id="login">
+      <h2 class="login-title" id="form-title"><span class="highlight">Login</span></h2>
+      <p class="login-subtitle" id="login-subtitle">Sign in to access your account</p>
+      
+      <div class="error-message" id="status-message"></div>
+      
+      <form id="login-form">
+        <div class="form-group">
+          <label class="form-label" for="username">Username</label>
+          <input type="text" id="username" class="form-input" placeholder="Your username" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <input type="password" id="password" class="form-input" placeholder="••••••••" required>
+        </div>
+        
+        <button type="submit" class="login-btn" id="submit-btn">Sign In</button>
+      </form>
+      
+      <div class="login-footer">
+        <a href="#">Forgot password?</a>
+      </div>
+      
+      <div class="login-toggle">
+        <button class="login-toggle-btn" id="switch-mode-btn">Don't have an account? Sign up</button>
+      </div>
     </section>
 
     <div class="section-divider"></div>
@@ -637,8 +831,8 @@
   </footer>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getDatabase, ref, onValue, get, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyA9pr29fe_2qOINUTnWdJxbLzcU4gRjttU",
@@ -727,6 +921,7 @@
     const hamburgerBtn = document.getElementById("hamburger-toggle");
     const drawerMenu = document.getElementById("drawer-menu");
     const drawerOverlay = document.getElementById("drawer-overlay");
+    const adminSection = document.getElementById("admin-section");
 
     function toggleMenu() {
       hamburgerBtn.classList.toggle("active");
@@ -734,8 +929,19 @@
       drawerOverlay.classList.toggle("open");
     }
 
+    function checkAdminAccess() {
+      const loggedInUser = localStorage.getItem("loggedInUser");
+      if (loggedInUser === "admin") {
+        adminSection.style.display = "block";
+      } else {
+        adminSection.style.display = "none";
+      }
+    }
+
     hamburgerBtn.addEventListener("click", toggleMenu);
     drawerOverlay.addEventListener("click", toggleMenu);
+
+    checkAdminAccess();
 
     document.querySelectorAll(".drawer-link").forEach(link => {
       link.addEventListener("click", () => {
@@ -744,6 +950,135 @@
         }
       });
     });
+
+    const loginSection = document.getElementById("login");
+    const loginForm = document.getElementById("login-form");
+    const statusMessage = document.getElementById("status-message");
+    const switchModeBtn = document.getElementById("switch-mode-btn");
+    const formTitle = document.getElementById("form-title");
+    const loginSubtitle = document.getElementById("login-subtitle");
+    const submitBtn = document.getElementById("submit-btn");
+
+    let isLoginMode = true;
+
+    function showLogin() {
+      loginSection.classList.add("active");
+      document.getElementById("home").style.display = "none";
+      document.getElementById("projects").style.display = "none";
+      document.getElementById("about").style.display = "none";
+    }
+
+    function hideLogin() {
+      loginSection.classList.remove("active");
+      document.getElementById("home").style.display = "block";
+      document.getElementById("projects").style.display = "block";
+      document.getElementById("about").style.display = "block";
+    }
+
+    switchModeBtn.addEventListener("click", () => {
+      isLoginMode = !isLoginMode;
+      statusMessage.className = "";
+      statusMessage.textContent = "";
+      
+      if (isLoginMode) {
+        formTitle.innerHTML = '<span class="highlight">Login</span>';
+        loginSubtitle.textContent = "Sign in to access your account";
+        submitBtn.textContent = "Sign In";
+        switchModeBtn.textContent = "Don't have an account? Sign up";
+      } else {
+        formTitle.innerHTML = '<span class="highlight">Register</span>';
+        loginSubtitle.textContent = "Create a new account";
+        submitBtn.textContent = "Sign Up";
+        switchModeBtn.textContent = "Already have an account? Sign in";
+      }
+    });
+
+    async function hashPassword(string) {
+      const utf8 = new TextEncoder().encode(string);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray.map((bytes) => bytes.toString(16).padStart(2, '0')).join('');
+      return hashHex;
+    }
+
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value;
+
+      statusMessage.className = "";
+      statusMessage.textContent = "";
+
+      try {
+        const userRef = ref(db, "users/" + username);
+        const snapshot = await get(userRef);
+
+        if (isLoginMode) {
+          if (snapshot.exists()) {
+            const userData = snapshot.val();
+            const hashedPassword = await hashPassword(password);
+            if (userData.password === hashedPassword) {
+              localStorage.setItem("loggedInUser", username);
+              statusMessage.textContent = "Login successful!";
+              statusMessage.className = "success";
+              checkAdminAccess();
+              setTimeout(() => {
+                loginForm.reset();
+                hideLogin();
+              }, 1000);
+              return;
+            }
+          }
+          statusMessage.textContent = "Invalid username or password.";
+          statusMessage.className = "active";
+        } else {
+          if (snapshot.exists()) {
+            statusMessage.textContent = "Username is already taken.";
+            statusMessage.className = "active";
+            return;
+          }
+
+          const hashedPassword = await hashPassword(password);
+          await set(userRef, {
+            password: hashedPassword,
+            redirect: "index.html"
+          });
+
+          statusMessage.textContent = "Registration successful! You can now log in.";
+          statusMessage.className = "success";
+
+          setTimeout(() => {
+            switchModeBtn.click();
+          }, 1500);
+        }
+      } catch (error) {
+        statusMessage.textContent = "An error occurred. Please try again.";
+        statusMessage.className = "active";
+        console.error(error);
+      }
+    });
+
+    const navLinks = document.querySelector(".nav-links");
+    if (navLinks) {
+      const loginLink = document.createElement("a");
+      loginLink.href = "#login";
+      loginLink.textContent = "Login";
+      loginLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        showLogin();
+      });
+      navLinks.appendChild(loginLink);
+    }
+
+    const drawerLoginLink = document.getElementById("drawer-login-link");
+    if (drawerLoginLink) {
+      drawerLoginLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        showLogin();
+        toggleMenu();
+      });
+    }
   </script>
 </body>
 </html>
