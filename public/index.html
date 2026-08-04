@@ -1,150 +1,749 @@
-<!doctype html>
-<html>
-  <head>
-    <title>Ztools</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/@catppuccin/palette@latest/css/catppuccin.css"
-    />
-    <link rel="website icon" type="png" href="Icon/main.png" />
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Protfolio</title>
+  <link rel="website icon" type="image/png" href="Icon/main.png" />
 
-    <style>
-      body {
-        background-color: var(--ctp-mocha-base);
-        color: var(--ctp-mocha-text);
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        margin: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        padding: 20px;
-        box-sizing: border-box;
-      }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
 
-      .menu {
-        display: flex;
+  <style>
+    :root {
+      --bg-color: #121212;
+      --card-bg: #1e1e1e;
+      --card-border: #333333;
+      --text-main: #e3e3e3;
+      --text-muted: #999999;
+      --accent-purple: #6965db;
+      --accent-teal: #12b886;
+      --accent-orange: #ff922b;
+      --accent-pink: #f06595;
+      --shadow-offset: 4px 4px 0px #000000;
+      --shadow-hover: 6px 6px 0px var(--accent-purple);
+      --font-hand: 'Patrick Hand', cursive, sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1.5px, transparent 1.5px);
+      background-size: 24px 24px;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 70px;
+      background: rgba(18, 18, 18, 0.95);
+      border-bottom: 2px solid var(--card-border);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+    }
+
+    .site-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-family: var(--font-hand);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text-main);
+      padding: 4px 12px;
+      border: 2px solid var(--card-border);
+      border-radius: 10px;
+      background: var(--card-bg);
+      box-shadow: 3px 3px 0px #000;
+      transition: all 0.2s ease;
+    }
+
+    .site-logo:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0px var(--accent-purple);
+    }
+
+    .site-logo img {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+    }
+
+    .site-logo .logo-highlight {
+      color: var(--accent-purple);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-main);
+      text-decoration: none;
+      font-family: var(--font-hand);
+      font-size: 1.25rem;
+      padding: 6px 12px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      background: rgba(105, 101, 219, 0.15);
+      color: var(--accent-purple);
+    }
+
+    .hamburger-btn {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 38px;
+      height: 38px;
+      background: var(--card-bg);
+      border: 2px solid var(--card-border);
+      border-radius: 8px;
+      box-shadow: 2px 2px 0px #000;
+      padding: 8px;
+      cursor: pointer;
+      z-index: 105;
+    }
+
+    .hamburger-btn span {
+      width: 100%;
+      height: 2px;
+      background: var(--text-main);
+      border-radius: 2px;
+      transition: all 0.25s ease;
+    }
+
+    .hamburger-btn.active span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .hamburger-btn.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger-btn.active span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .drawer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 90;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.25s ease;
+    }
+
+    .drawer-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .drawer-menu {
+      position: fixed;
+      top: 0;
+      right: -360px;
+      width: 320px;
+      max-width: 85vw;
+      height: 100vh;
+      background: #161616;
+      border-left: 2px solid var(--card-border);
+      z-index: 95;
+      padding: 90px 24px 30px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      overflow-y: auto;
+      transition: right 0.3s ease;
+    }
+
+    .drawer-menu.open {
+      right: 0;
+    }
+
+    .drawer-section-title {
+      font-family: var(--font-hand);
+      font-size: 1.3rem;
+      color: var(--accent-purple);
+      margin-bottom: 10px;
+      border-bottom: 2px stroke var(--card-border);
+    }
+
+    .drawer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .drawer-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: var(--card-bg);
+      border: 2px solid var(--card-border);
+      border-radius: 8px;
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 0.95rem;
+      box-shadow: 2px 2px 0px #000;
+      transition: all 0.2s ease;
+    }
+
+    .drawer-link:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0px var(--accent-purple);
+    }
+
+    .section-divider {
+      width: 100%;
+      height: 2px;
+      border-top: 2px dashed var(--card-border);
+      margin: 50px 0;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 110px 20px 60px 20px;
+    }
+
+    .hero-section {
+      text-align: center;
+      padding: 40px 10px;
+    }
+
+    .hero-title {
+      font-family: var(--font-hand);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .hero-title .highlight {
+      color: var(--accent-purple);
+      background: rgba(105, 101, 219, 0.15);
+      padding: 2px 10px;
+      border-radius: 8px;
+      border: 2px dashed var(--accent-purple);
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .section-heading {
+      font-family: var(--font-hand);
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 25px;
+      display: inline-block;
+      padding-bottom: 4px;
+      border-bottom: 3px solid var(--accent-purple);
+    }
+
+    .section-heading .highlight {
+      color: var(--accent-pink);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 22px;
+    }
+
+    .project-card {
+      background: var(--card-bg);
+      border: 2px solid var(--card-border);
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: var(--shadow-offset);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+    }
+
+    .project-card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--accent-purple);
+    }
+
+    .project-thumb-container {
+      width: 100%;
+      height: 140px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #141414;
+      border: 2px solid var(--card-border);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .project-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .project-thumb-placeholder {
+      font-size: 2.5rem;
+      color: var(--accent-teal);
+    }
+
+    .project-title {
+      font-family: var(--font-hand);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .project-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+      margin-bottom: 18px;
+      flex-grow: 1;
+    }
+
+    .project-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 14px;
+      background: var(--card-bg);
+      border: 2px solid var(--card-border);
+      border-radius: 8px;
+      color: var(--accent-teal);
+      font-family: var(--font-hand);
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 2px 2px 0px #000;
+      transition: all 0.2s ease;
+    }
+
+    .project-btn:hover {
+      background: var(--accent-teal);
+      color: #000;
+      border-color: var(--accent-teal);
+      box-shadow: 3px 3px 0px #000;
+    }
+
+    .about-card {
+      background: var(--card-bg);
+      border: 2px solid var(--card-border);
+      border-radius: 16px;
+      padding: 35px;
+      box-shadow: var(--shadow-offset);
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .about-avatar-wrap {
+      flex-shrink: 0;
+    }
+
+    .about-avatar-circle {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      padding: 4px;
+      border: 3px solid var(--accent-purple);
+      background: #141414;
+      box-shadow: 4px 4px 0px #000;
+    }
+
+    .about-avatar-circle img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .about-details {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .about-heading {
+      font-family: var(--font-hand);
+      font-size: 2.2rem;
+      font-weight: 700;
+    }
+
+    .about-heading .highlight {
+      color: var(--accent-pink);
+      border-bottom: 2px dashed var(--accent-pink);
+    }
+
+    .about-bio {
+      font-size: 1.05rem;
+      line-height: 1.55;
+      color: var(--text-main);
+    }
+
+    .about-bio .tag {
+      color: var(--accent-teal);
+      font-weight: 600;
+      border-bottom: 2px solid var(--accent-teal);
+    }
+
+    .about-bio .code-tag {
+      color: var(--accent-orange);
+      font-weight: 600;
+    }
+
+    .about-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .row-label {
+      font-family: var(--font-hand);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-main);
+      min-width: 90px;
+    }
+
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: var(--card-bg);
+      border: 2px solid var(--card-border);
+      border-radius: 8px;
+      color: var(--text-main);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      box-shadow: 2px 2px 0px #000;
+      transition: all 0.2s ease;
+    }
+
+    .social-btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0px var(--accent-purple);
+      border-color: var(--accent-purple);
+    }
+
+    .contact-box {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 16px;
+      background: rgba(18, 184, 134, 0.1);
+      border: 2px solid var(--accent-teal);
+      border-radius: 8px;
+      color: var(--accent-teal);
+      font-family: monospace;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      box-shadow: 2px 2px 0px #000;
+    }
+
+    .contact-box:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0px var(--accent-teal);
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      font-family: var(--font-hand);
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      border-top: 2px dashed var(--card-border);
+      margin-top: 50px;
+    }
+
+    a:active {
+      color: var(--accent-pink);
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 80px;
+    }
+
+    @media (max-width: 800px) {
+      .about-card {
         flex-direction: column;
-        gap: 15px;
-        width: 100%;
-        max-width: 300px;
-      }
-
-      a {
-        background-color: var(--ctp-mocha-teal);
-        color: var(--ctp-mocha-base);
-        text-decoration: none;
-        padding: 15px;
-        border-radius: 12px;
         text-align: center;
-        font-weight: bold;
-        font-size: 1.1rem;
-        transition: transform 0.2s;
-        user-select: none;
-        -webkit-user-select: none;
+        padding: 24px;
       }
-
-      @media (hover: hover) {
-        a:hover {
-          transform: scale(1.03);
-        }
+      .about-row {
+        justify-content: center;
       }
-
-      a:active {
-        transform: scale(0.98);
-      }
-
-      .section-title {
-        color: var(--ctp-mocha-subtext0);
-        font-size: 0.9rem;
-        font-weight: bold;
-        text-transform: uppercase;
-        margin-top: 15px;
-        margin-bottom: 5px;
-      }
-
-      .menu-section {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
+      .row-label {
         width: 100%;
       }
-
-      p {
-        margin: 0;
+      .nav-links {
+        display: none;
       }
+    }
+  </style>
+</head>
+<body>
 
-      @media (max-width: 768px) {
-        .desktop-only {
-          display: none;
-        }
-      }
-    </style>
-  </head>
+  <header>
+    <a href="#" class="site-logo" id="site-logo-container">
+      <img src="https://github.com/zeti1223.png" alt="Logo" onerror="this.style.display='none'">
+      <span><span class="logo-highlight">Zeti_1223</span></span>
+    </a>
 
-  <body>
-    <div class="menu">
-      <div id="main-menu" class="menu-section">
-        <div class="section-title">Tools</div>
-        <a href="Tools/Calculator/index.html">
-          <p>Calculator</p>
-        </a>
-        <a href="Tools/To-Do/index.html">
-          <p>To-do</p>
-        </a>
-        <a href="Tools/Whiteboard/index.html" class="desktop-only">
-          <p>Whiteboard</p>
-        </a>
-        <a href="Tools/Weather/index.html">
-          <p>Weather</p>
-        </a>
-        <a href="Tools/Quiz/index.html">
-          <p>Quiz</p>
-        </a>
-        <div class="section-title">Menu</div>
-        <a href="About/index.html">
-          <p>About</p>
-        </a>
-        <a href="javascript:void(0)" onclick="toggleMenu('games')">
-          <p>Games</p>
-        </a>
-        <a href="Login.html">
-          <p>Login</p>
-        </a>
-      </div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
 
-      <div id="games-menu" class="menu-section" style="display: none">
-        <div class="section-title">Games</div>
-        <a href="Games/Pac-Man/index.html">
-          <p>Pac-Man</p>
-        </a>
-        <a href="Games/2048/index.html">
-          <p>2048</p>
-        </a>
-        <a href="Games/Snake/index.html">
-          <p>Snake</p>
-        </a>
-        <div class="section-title">Navigation</div>
-        <a href="javascript:void(0)" onclick="toggleMenu('main')">
-          <p>Back</p>
-        </a>
+    <button class="hamburger-btn" id="hamburger-toggle" aria-label="Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+
+  <div class="drawer-overlay" id="drawer-overlay"></div>
+  <div class="drawer-menu" id="drawer-menu">
+    <div>
+      <div class="drawer-section-title">Tools</div>
+      <div class="drawer-links">
+        <a href="Tools/Calculator/index.html" class="drawer-link">Calculator</a>
+        <a href="Tools/To-Do/index.html" class="drawer-link">To-do</a>
+        <a href="Tools/Whiteboard/index.html" class="drawer-link">Whiteboard</a>
+        <a href="Tools/Weather/index.html" class="drawer-link">Weather</a>
+        <a href="Tools/Quiz/index.html" class="drawer-link">Quiz</a>
+        <a href="Tools/Clock/index.html" class="drawer-link">Clock</a>
       </div>
     </div>
-    <script>
-      function toggleMenu(menu) {
-        const main = document.getElementById("main-menu");
-        const games = document.getElementById("games-menu");
-        if (menu === "games") {
-          main.style.display = "none";
-          games.style.display = "flex";
-        } else {
-          main.style.display = "flex";
-          games.style.display = "none";
-        }
+
+    <div>
+      <div class="drawer-section-title">Games</div>
+      <div class="drawer-links">
+        <a href="Games/Pac-Man/index.html" class="drawer-link">Pac-Man</a>
+        <a href="Games/2048/index.html" class="drawer-link">2048</a>
+        <a href="Games/Snake/index.html" class="drawer-link">Snake</a>
+      </div>
+    </div>
+
+    <div>
+      <div class="drawer-links">
+        <a href="Login.html" class="drawer-link">Login</a>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <section class="hero-section" id="home">
+      <h1 class="hero-title">Welcome to my <span class="highlight">website!</span></h1>
+      <p class="hero-subtitle">I use arch btw!</p>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section id="projects">
+      <h2 class="section-heading">My <span class="highlight">projects</span></h2>
+
+      <div class="projects-grid" id="projects-grid">
+        <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">
+          Loading projects...
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section id="about">
+      <div class="about-card">
+        <div class="about-avatar-wrap">
+          <div class="about-avatar-circle">
+            <img src="Icon/profil-1_1.jpg" alt="Avatar" onerror="this.src='Icon/main.png'">
+          </div>
+        </div>
+
+        <div class="about-details">
+          <h2 class="about-heading">About <span class="highlight">me</span></h2>
+          <p class="about-bio">
+            Hello, I am a 14 year old software developer who loves learning new technologies.
+            <br/>
+            I mainly work with <span class="code-tag">JavaScript</span> and <span class="code-tag">Python</span>, and I’m currently learning <span class="code-tag">Lua</span>.
+            <br/>
+            When I'm not coding, I like contributing to open source projects or reading tech articles.
+          </p>
+
+          <div class="about-row">
+            <span class="row-label">Socials:</span>
+            <a href="https://github.com/zeti1223" target="_blank" class="social-btn">GitHub</a>
+            <a href="https://unsplash.com/@zeti_1223" target="_blank" class="social-btn">Unsplash</a>
+            <a href="https://youtube.com/@Zeti_1223-offical" target="_blank" class="social-btn">YouTube channel</a>
+          </div>
+
+          <div class="about-row">
+            <span class="row-label">Contact me:</span>
+            <a href="mailto:zeteny@cigoria.eu" class="contact-box">E-mail: zeteny@cigoria.eu</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>©2026 Source code:<a href="https://github.com/zeti1223/website">website</a></p>
+  </footer>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA9pr29fe_2qOINUTnWdJxbLzcU4gRjttU",
+      authDomain: "zeti1223.firebaseapp.com",
+      databaseURL: "https://zeti1223-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "zeti1223",
+      storageBucket: "zeti1223.firebasestorage.app",
+      messagingSenderId: "556059487179",
+      appId: "1:556059487179:web:eff9cd64fe2154de12244e",
+      measurementId: "G-WFE315SDXZ",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const defaultProjects = [
+      {
+        title: "LED Matrix",
+        description: "A controllable led matrix out of addressable LEDs.",
+        url: "https://github.com/zeti1223/LED-Matrix-Display",
+        image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        title: "simpleShare",
+        description: "An open-source file sharing platform with easy to remember 6 character codes.",
+        url: "https://github.com/cigoria/simpleShare",
+        image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        title: "Inventory Manager",
+        description: "Simple inventory manager that connects to a MySQL server.",
+        url: "https://github.com/zeti1223",
+        image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        title: "cigoria.Down",
+        description: "A TUI built in python for downloading music with metadata from Youtube and Spotify!",
+        url: "https://github.com/zeti1223",
+        image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=500&q=80"
       }
-    </script>
-    <script src="inspect.js"></script>
-  </body>
+    ];
+
+    const projectsGrid = document.getElementById("projects-grid");
+
+    function renderProjects(projects) {
+      if (!projects || projects.length === 0) {
+        projects = defaultProjects;
+      }
+      
+      projectsGrid.innerHTML = projects.map(proj => {
+        const title = proj.title || proj.name || "Projekt";
+        const desc = proj.description || "Nincs megadva leírás.";
+        const url = proj.url || proj.html_url || "https://github.com/zeti1223";
+        const image = proj.image || proj.thumbnail || "";
+
+        return `
+          <div class="project-card">
+            <div class="project-thumb-container">
+              ${image ? `<img src="${image}" alt="${title}" class="project-thumb" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">` : ''}
+              <div class="project-thumb-placeholder" style="${image ? 'display:none;' : ''}">💻</div>
+            </div>
+            <h3 class="project-title">${title}</h3>
+            <p class="project-desc">${desc}</p>
+            <a href="${url}" target="_blank" rel="noopener noreferrer" class="project-btn">
+              View on github ↗
+            </a>
+          </div>
+        `;
+      }).join("");
+    }
+
+    const projectsRef = ref(db, 'github_projects');
+    onValue(projectsRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        let list = Array.isArray(data) ? data : Object.values(data);
+        renderProjects(list);
+      } else {
+        renderProjects(defaultProjects);
+      }
+    }, (error) => {
+      console.warn("Firebase error, rendering defaults:", error);
+      renderProjects(defaultProjects);
+    });
+
+    const hamburgerBtn = document.getElementById("hamburger-toggle");
+    const drawerMenu = document.getElementById("drawer-menu");
+    const drawerOverlay = document.getElementById("drawer-overlay");
+
+    function toggleMenu() {
+      hamburgerBtn.classList.toggle("active");
+      drawerMenu.classList.toggle("open");
+      drawerOverlay.classList.toggle("open");
+    }
+
+    hamburgerBtn.addEventListener("click", toggleMenu);
+    drawerOverlay.addEventListener("click", toggleMenu);
+
+    document.querySelectorAll(".drawer-link").forEach(link => {
+      link.addEventListener("click", () => {
+        if (drawerMenu.classList.contains("open")) {
+          toggleMenu();
+        }
+      });
+    });
+  </script>
+</body>
 </html>

@@ -1,155 +1,566 @@
-<!doctype html>
-<html>
-  <head>
-    <title>Admin</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/@catppuccin/palette@latest/css/catppuccin.css"
-    />
-    <link rel="website icon" type="png" href="../Icon/main.png" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin - Dashboard & GitHub Projects</title>
+  <link rel="website icon" type="image/png" href="../Icon/main.png" />
 
-    <style>
-      body {
-        background-color: var(--ctp-mocha-base);
-        color: var(--ctp-mocha-text);
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        margin: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        padding: 20px;
-        box-sizing: border-box;
-      }
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
 
-      .menu {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        width: 100%;
-        max-width: 300px;
-      }
+  <style>
+    :root {
+      --bg-color: #121212;
+      --card-bg: #1e1e1e;
+      --card-border: #333333;
+      --text-main: #e3e3e3;
+      --text-muted: #999999;
+      --accent-purple: #6965db;
+      --accent-teal: #12b886;
+      --accent-green: #51cf66;
+      --accent-red: #ff6b6b;
+      --font-hand: 'Patrick Hand', cursive, sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
 
-      a {
-        background-color: var(--ctp-mocha-teal);
-        color: var(--ctp-mocha-base);
-        text-decoration: none;
-        padding: 15px;
-        border-radius: 12px;
-        text-align: center;
-        font-weight: bold;
-        font-size: 1.1rem;
-        transition: transform 0.2s;
-        user-select: none;
-        -webkit-user-select: none;
-      }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-      @media (hover: hover) {
-        a:hover {
-          transform: scale(1.03);
-        }
-      }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      padding: 40px 20px;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1.5px, transparent 1.5px);
+      background-size: 24px 24px;
+    }
 
-      a:active {
-        transform: scale(0.98);
-      }
+    .container {
+      max-width: 950px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
 
-      .section-title {
-        color: var(--ctp-mocha-subtext0);
-        font-size: 0.9rem;
-        font-weight: bold;
-        text-transform: uppercase;
-        margin-top: 15px;
-        margin-bottom: 5px;
-      }
+    .header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 15px;
+      padding-bottom: 15px;
+      border-bottom: 2px dashed var(--card-border);
+    }
 
-      .menu-section {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        width: 100%;
-      }
+    h1 {
+      font-family: var(--font-hand);
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--accent-purple);
+    }
 
-      p {
-        margin: 0;
-      }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: var(--card-bg);
+      border: 2px solid var(--card-border);
+      border-radius: 8px;
+      color: var(--text-main);
+      text-decoration: none;
+      font-family: var(--font-hand);
+      font-size: 1.15rem;
+      font-weight: 700;
+      box-shadow: 2px 2px 0px #000;
+      transition: all 0.2s ease;
+    }
 
-      @media (max-width: 768px) {
-        .desktop-only {
-          display: none;
-        }
-      }
-    </style>
-  </head>
+    .back-link:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0px var(--accent-purple);
+      border-color: var(--accent-purple);
+    }
 
-  <body>
-    <div class="menu">
-      <div id="main-menu" class="menu-section">
-        <div class="section-title">Tools</div>
-        <a href="../Tools/Calculator/index.html">
-          <p>Calculator</p>
-        </a>
-        <a href="../Tools/To-Do/index.html">
-          <p>To-do</p>
-        </a>
-        <a href="../Tools/Whiteboard/index.html" class="desktop-only">
-          <p>Whiteboard</p>
-        </a>
-        <a href="../Tools/Clock/index.html">
-          <p>Clock</p>
-        </a>
-        <a href="../Tools/Weather/index.html">
-          <p>Weather</p>
-        </a>
-        <a href="../Tools/Quiz/index.html">
-          <p>Quiz</p>
-        </a>
-        <a href="valentin.html">
-          <p>Valentin napi fotózás</p>
-        </a>
-        <div class="section-title">Menu</div>
-        <a href="javascript:void(0)" onclick="toggleMenu('games')">
-          <p>Games</p>
-        </a>
+    .admin-card {
+      background: var(--card-bg);
+      border: 2px solid var(--card-border);
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 4px 4px 0px #000;
+    }
+
+    .card-title {
+      font-family: var(--font-hand);
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: var(--accent-teal);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-family: var(--font-hand);
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: 2px solid var(--card-border);
+      box-shadow: 2px 2px 0px #000;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0px #000;
+    }
+
+    .btn-primary {
+      background: var(--accent-purple);
+      color: #fff;
+      border-color: var(--accent-purple);
+    }
+
+    .btn-success {
+      background: var(--accent-green);
+      color: #000;
+      border-color: var(--accent-green);
+    }
+
+    .btn-secondary {
+      background: #2a2a2a;
+      color: var(--text-main);
+    }
+
+    .btn-danger {
+      background: rgba(255, 107, 107, 0.15);
+      color: var(--accent-red);
+      border-color: var(--accent-red);
+    }
+
+    .projects-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 15px;
+    }
+
+    .project-item {
+      background: #141414;
+      border: 2px solid var(--card-border);
+      border-radius: 10px;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 14px;
+      align-items: start;
+    }
+
+    .project-item.disabled {
+      opacity: 0.5;
+    }
+
+    .checkbox-wrap {
+      padding-top: 6px;
+    }
+
+    .checkbox-wrap input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      accent-color: var(--accent-purple);
+    }
+
+    .item-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 8px 12px;
+      background: #1e1e1e;
+      border: 2px solid var(--card-border);
+      border-radius: 6px;
+      color: var(--text-main);
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    input[type="text"]:focus {
+      border-color: var(--accent-purple);
+    }
+
+    .actions-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 2px dashed var(--card-border);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .status-msg {
+      font-family: var(--font-hand);
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .status-msg.success { color: var(--accent-green); }
+    .status-msg.error { color: var(--accent-red); }
+
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .quick-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      background: #141414;
+      border: 2px solid var(--card-border);
+      border-radius: 8px;
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 0.95rem;
+      box-shadow: 2px 2px 0px #000;
+      transition: all 0.2s ease;
+    }
+
+    .quick-link:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0px var(--accent-purple);
+      border-color: var(--accent-purple);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header-bar">
+      <h1>⚙️ Admin Dashboard</h1>
+      <a href="../index.html" class="back-link">← Back to Homepage</a>
+    </div>
+
+    <div class="admin-card">
+      <div class="card-title">
+        <span>🚀 GitHub Projects Management (zeti1223)</span>
+        <button id="fetch-github-btn" class="btn btn-primary">
+          🔄 Fetch GitHub Repos
+        </button>
+      </div>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 12px;">
+        Select and edit GitHub projects displayed on the main page. Clicking the save button updates the data in Firebase Realtime Database!
+      </p>
+
+      <div id="projects-list" class="projects-list">
+        <div style="text-align: center; color: var(--text-muted); padding: 20px;">
+          Loading projects from Firebase...
+        </div>
       </div>
 
-      <div id="games-menu" class="menu-section" style="display: none">
-        <div class="section-title">Games</div>
-        <a href="../Games/Pac-Man/index.html">
-          <p>Pac-Man</p>
-        </a>
-        <a href="../Games/2048/index.html">
-          <p>2048</p>
-        </a>
-        <a href="../Games/Snake/index.html">
-          <p>Snake</p>
-        </a>
-        <div class="section-title">Navigation</div>
-        <a href="javascript:void(0)" onclick="toggleMenu('main')">
-          <p>Back</p>
-        </a>
+      <div class="actions-bar">
+        <button id="add-custom-btn" class="btn btn-secondary">+ Custom Project</button>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span id="status-msg" class="status-msg"></span>
+          <button id="save-firebase-btn" class="btn btn-success">💾 Save to Firebase</button>
+        </div>
       </div>
     </div>
-    <script>
-      function toggleMenu(menu) {
-        const main = document.getElementById("main-menu");
-        const games = document.getElementById("games-menu");
-        if (menu === "games") {
-          main.style.display = "none";
-          games.style.display = "flex";
+
+    <div class="admin-card">
+      <div class="card-title">🛠️ Tools and Games Quick Links</div>
+      
+      <div style="margin-bottom: 15px;">
+        <div style="font-family: var(--font-hand); font-size: 1.2rem; color: var(--text-muted); margin-bottom: 6px;">Tools</div>
+        <div class="links-grid">
+          <a href="../Tools/Calculator/index.html" class="quick-link">Calculator</a>
+          <a href="../Tools/To-Do/index.html" class="quick-link">To-do</a>
+          <a href="../Tools/Whiteboard/index.html" class="quick-link">Whiteboard</a>
+          <a href="../Tools/Weather/index.html" class="quick-link">Weather</a>
+          <a href="../Tools/Quiz/index.html" class="quick-link">Quiz</a>
+          <a href="../Tools/Clock/index.html" class="quick-link">Clock</a>
+          <a href="valentin.html" class="quick-link">Valentin nap</a>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-family: var(--font-hand); font-size: 1.2rem; color: var(--text-muted); margin-bottom: 6px;">Games</div>
+        <div class="links-grid">
+          <a href="../Games/Pac-Man/index.html" class="quick-link">Pac-Man</a>
+          <a href="../Games/2048/index.html" class="quick-link">2048</a>
+          <a href="../Games/Snake/index.html" class="quick-link">Snake</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    if (localStorage.getItem("loggedInUser") !== "admin") {
+      window.location.href = "../Login.html";
+    }
+  </script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+    import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA9pr29fe_2qOINUTnWdJxbLzcU4gRjttU",
+      authDomain: "zeti1223.firebaseapp.com",
+      databaseURL: "https://zeti1223-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "zeti1223",
+      storageBucket: "zeti1223.firebasestorage.app",
+      messagingSenderId: "556059487179",
+      appId: "1:556059487179:web:eff9cd64fe2154de12244e",
+      measurementId: "G-WFE315SDXZ",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    let projects = [];
+
+    const defaultProjects = [
+      {
+        enabled: true,
+        title: "LED Matrix",
+        description: "A controllable led matrix out of addressable LEDs.",
+        url: "https://github.com/zeti1223/LED-Matrix-Display",
+        image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        enabled: true,
+        title: "simpleShare",
+        description: "An open-source file sharing platform with easy to remember 6 character codes.",
+        url: "https://github.com/cigoria/simpleShare",
+        image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        enabled: true,
+        title: "Inventory Manager",
+        description: "Simple inventory manager that connects to a MySQL server.",
+        url: "https://github.com/zeti1223",
+        image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        enabled: true,
+        title: "cigoria.Down",
+        description: "A TUI built in python for downloading music with metadata from Youtube and Spotify!",
+        url: "https://github.com/zeti1223",
+        image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=500&q=80"
+      }
+    ];
+
+    const projectsListEl = document.getElementById("projects-list");
+    const statusMsg = document.getElementById("status-msg");
+
+    async function loadProjectsFromFirebase() {
+      try {
+        const projectsRef = ref(db, 'github_projects');
+        const snapshot = await get(projectsRef);
+        if (snapshot.exists()) {
+          const val = snapshot.val();
+          projects = Array.isArray(val) ? val : Object.values(val);
         } else {
-          main.style.display = "flex";
-          games.style.display = "none";
+          projects = defaultProjects;
         }
+        renderProjectsList();
+      } catch (err) {
+        console.error("Error:", err);
+        projects = defaultProjects;
+        renderProjectsList();
       }
-    </script>
-    <script src="inspect.js"></script>
-    <script>
-      if (localStorage.getItem("loggedInUser") !== "admin") {
-        window.location.href = "../Login.html";
+    }
+
+    function renderProjectsList() {
+      if (projects.length === 0) {
+        projectsListEl.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 20px;">No projects to display.</div>`;
+        return;
       }
-    </script>
-  </body>
+
+      projectsListEl.innerHTML = projects.map((proj, idx) => {
+        const enabled = proj.enabled !== false;
+        return `
+          <div class="project-item ${enabled ? '' : 'disabled'}" data-index="${idx}">
+            <div class="checkbox-wrap">
+              <input type="checkbox" class="proj-checkbox" data-index="${idx}" ${enabled ? 'checked' : ''} title="Display">
+            </div>
+            
+            <div class="item-fields">
+              <div>
+                <label>Project Title</label>
+                <input type="text" class="proj-title" data-index="${idx}" value="${escapeHtml(proj.title || proj.name || '')}">
+              </div>
+
+              <div>
+                <label>GitHub Repository URL</label>
+                <input type="text" class="proj-url" data-index="${idx}" value="${escapeHtml(proj.url || proj.html_url || '')}">
+              </div>
+
+              <div class="full-width">
+                <label>Project Description</label>
+                <input type="text" class="proj-desc" data-index="${idx}" value="${escapeHtml(proj.description || '')}">
+              </div>
+
+              <div class="full-width">
+                <label>Cover Image (Thumbnail URL)</label>
+                <input type="text" class="proj-image" data-index="${idx}" value="${escapeHtml(proj.image || '')}" placeholder="https://...">
+              </div>
+            </div>
+
+            <div>
+              <button class="btn btn-danger delete-btn" data-index="${idx}">🗑️</button>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      attachListEvents();
+    }
+
+    function escapeHtml(str) {
+      return (str || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    function attachListEvents() {
+      document.querySelectorAll(".proj-checkbox").forEach(cb => {
+        cb.addEventListener("change", (e) => {
+          const idx = e.target.dataset.index;
+          projects[idx].enabled = e.target.checked;
+          renderProjectsList();
+        });
+      });
+
+      document.querySelectorAll(".proj-title").forEach(inp => {
+        inp.addEventListener("input", (e) => {
+          projects[e.target.dataset.index].title = e.target.value;
+        });
+      });
+
+      document.querySelectorAll(".proj-url").forEach(inp => {
+        inp.addEventListener("input", (e) => {
+          projects[e.target.dataset.index].url = e.target.value;
+        });
+      });
+
+      document.querySelectorAll(".proj-desc").forEach(inp => {
+        inp.addEventListener("input", (e) => {
+          projects[e.target.dataset.index].description = e.target.value;
+        });
+      });
+
+      document.querySelectorAll(".proj-image").forEach(inp => {
+        inp.addEventListener("input", (e) => {
+          projects[e.target.dataset.index].image = e.target.value;
+        });
+      });
+
+      document.querySelectorAll(".delete-btn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          const idx = e.target.dataset.index;
+          projects.splice(idx, 1);
+          renderProjectsList();
+        });
+      });
+    }
+
+    document.getElementById("fetch-github-btn").addEventListener("click", async () => {
+      statusMsg.className = "status-msg";
+      statusMsg.textContent = "Fetching...";
+
+      try {
+        const res = await fetch("https://api.github.com/users/zeti1223/repos?sort=updated&per_page=15");
+        if (!res.ok) throw new Error("Error during fetch.");
+        const repos = await res.json();
+
+        repos.forEach(repo => {
+          const exists = projects.some(p => p.url === repo.html_url || p.title === repo.name);
+          if (!exists) {
+            projects.push({
+              enabled: true,
+              title: repo.name,
+              description: repo.description || "Public GitHub repository.",
+              url: repo.html_url,
+              image: ""
+            });
+          }
+        });
+
+        renderProjectsList();
+        statusMsg.className = "status-msg success";
+        statusMsg.textContent = "Successfully fetched!";
+        setTimeout(() => { statusMsg.textContent = ""; }, 3000);
+      } catch (err) {
+        console.error(err);
+        statusMsg.className = "status-msg error";
+        statusMsg.textContent = "Error fetching repos.";
+      }
+    });
+
+    document.getElementById("add-custom-btn").addEventListener("click", () => {
+      projects.push({
+        enabled: true,
+        title: "New Project",
+        description: "Short project description.",
+        url: "https://github.com/zeti1223",
+        image: ""
+      });
+      renderProjectsList();
+    });
+
+    document.getElementById("save-firebase-btn").addEventListener("click", async () => {
+      statusMsg.className = "status-msg";
+      statusMsg.textContent = "Saving...";
+
+      try {
+        const projectsRef = ref(db, 'github_projects');
+        await set(projectsRef, projects);
+        statusMsg.className = "status-msg success";
+        statusMsg.textContent = "Successfully saved to Firebase!";
+        setTimeout(() => { statusMsg.textContent = ""; }, 4000);
+      } catch (err) {
+        console.error("Save error:", err);
+        statusMsg.className = "status-msg error";
+        statusMsg.textContent = "Save error.";
+      }
+    });
+
+    loadProjectsFromFirebase();
+  </script>
+</body>
 </html>
