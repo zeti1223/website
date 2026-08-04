@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
     :root {
@@ -90,6 +91,12 @@
       border-color: var(--accent-purple);
     }
 
+    .back-link i {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     .admin-card {
       background: var(--card-bg);
       border: 2px solid var(--card-border);
@@ -111,6 +118,12 @@
       gap: 10px;
     }
 
+    .card-title i {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     .btn {
       padding: 8px 16px;
       border-radius: 8px;
@@ -124,6 +137,12 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
+    }
+
+    .btn i {
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .btn:hover {
@@ -266,21 +285,27 @@
       box-shadow: 4px 4px 0px var(--accent-purple);
       border-color: var(--accent-purple);
     }
+
+    .quick-link i {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   </style>
 </head>
 <body>
 
   <div class="container">
     <div class="header-bar">
-      <h1>⚙️ Admin Dashboard</h1>
-      <a href="../index.html" class="back-link">← Back to Homepage</a>
+      <h1>Admin Dashboard</h1>
+      <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Homepage</a>
     </div>
 
     <div class="admin-card">
       <div class="card-title">
-        <span>🚀 GitHub Projects Management (zeti1223)</span>
+        <span>GitHub Projects Management (zeti1223)</span>
         <button id="fetch-github-btn" class="btn btn-primary">
-          🔄 Fetch GitHub Repos
+          <i class="fa-solid fa-rotate" style="margin-right: 4px;"></i>Fetch GitHub Repos
         </button>
       </div>
       <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 12px;">
@@ -294,36 +319,36 @@
       </div>
 
       <div class="actions-bar">
-        <button id="add-custom-btn" class="btn btn-secondary">+ Custom Project</button>
+        <button id="add-custom-btn" class="btn btn-secondary"><i class="fa-solid fa-plus"></i> Custom Project</button>
         <div style="display: flex; align-items: center; gap: 12px;">
           <span id="status-msg" class="status-msg"></span>
-          <button id="save-firebase-btn" class="btn btn-success">💾 Save to Firebase</button>
+          <button id="save-firebase-btn" class="btn btn-success"><i class="fa-solid fa-floppy-disk" style="margin-right: 4px;"></i>Save to Firebase</button>
         </div>
       </div>
     </div>
 
     <div class="admin-card">
-      <div class="card-title">🛠️ Tools and Games Quick Links</div>
+      <div class="card-title"><i class="fa-solid fa-screwdriver-wrench" style="margin-right: 6px;"></i>Tools and Games Quick Links</div>
       
       <div style="margin-bottom: 15px;">
         <div style="font-family: var(--font-hand); font-size: 1.2rem; color: var(--text-muted); margin-bottom: 6px;">Tools</div>
         <div class="links-grid">
-          <a href="../Tools/Calculator/index.html" class="quick-link">Calculator</a>
-          <a href="../Tools/To-Do/index.html" class="quick-link">To-do</a>
-          <a href="../Tools/Whiteboard/index.html" class="quick-link">Whiteboard</a>
-          <a href="../Tools/Weather/index.html" class="quick-link">Weather</a>
-          <a href="../Tools/Quiz/index.html" class="quick-link">Quiz</a>
-          <a href="../Tools/Clock/index.html" class="quick-link">Clock</a>
-          <a href="valentin.html" class="quick-link">Valentin nap</a>
+          <a href="../Tools/Calculator/index.html" class="quick-link"><i class="fa-solid fa-calculator"></i> Calculator</a>
+          <a href="../Tools/To-Do/index.html" class="quick-link"><i class="fa-solid fa-list-check"></i> To-do</a>
+          <a href="../Tools/Whiteboard/index.html" class="quick-link"><i class="fa-solid fa-chalkboard"></i> Whiteboard</a>
+          <a href="../Tools/Weather/index.html" class="quick-link"><i class="fa-solid fa-cloud-sun"></i> Weather</a>
+          <a href="../Tools/Quiz/index.html" class="quick-link"><i class="fa-solid fa-question"></i> Quiz</a>
+          <a href="../Tools/Clock/index.html" class="quick-link"><i class="fa-solid fa-clock"></i> Clock</a>
+          <a href="valentin.html" class="quick-link"><i class="fa-solid fa-heart"></i> Valentin nap</a>
         </div>
       </div>
 
       <div>
         <div style="font-family: var(--font-hand); font-size: 1.2rem; color: var(--text-muted); margin-bottom: 6px;">Games</div>
         <div class="links-grid">
-          <a href="../Games/Pac-Man/index.html" class="quick-link">Pac-Man</a>
-          <a href="../Games/2048/index.html" class="quick-link">2048</a>
-          <a href="../Games/Snake/index.html" class="quick-link">Snake</a>
+          <a href="../Games/Pac-Man/index.html" class="quick-link"><i class="fa-solid fa-ghost"></i> Pac-Man</a>
+          <a href="../Games/2048/index.html" class="quick-link"><i class="fa-solid fa-grip"></i> 2048</a>
+          <a href="../Games/Snake/index.html" class="quick-link"><i class="fa-solid fa-staff-snake"></i> Snake</a>
         </div>
       </div>
     </div>
@@ -444,7 +469,7 @@
             </div>
 
             <div>
-              <button class="btn btn-danger delete-btn" data-index="${idx}">🗑️</button>
+              <button class="btn btn-danger delete-btn" data-index="${idx}"><i class="fa-solid fa-trash"></i></button>
             </div>
           </div>
         `;
@@ -492,7 +517,7 @@
 
       document.querySelectorAll(".delete-btn").forEach(btn => {
         btn.addEventListener("click", (e) => {
-          const idx = e.target.dataset.index;
+          const idx = btn.dataset.index;
           projects.splice(idx, 1);
           renderProjectsList();
         });

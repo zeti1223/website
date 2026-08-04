@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
     :root {
@@ -41,6 +42,7 @@
       overflow-x: hidden;
       background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1.5px, transparent 1.5px);
       background-size: 24px 24px;
+      user-select: none;
     }
 
     header {
@@ -116,36 +118,65 @@
     }
 
     .hamburger-btn {
+      position: relative;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      width: 38px;
-      height: 38px;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
       background: var(--card-bg);
       border: 2px solid var(--card-border);
-      border-radius: 8px;
+      border-radius: 10px;
       box-shadow: 2px 2px 0px #000;
-      padding: 8px;
       cursor: pointer;
       z-index: 105;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .hamburger-btn:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0px var(--accent-purple);
+      border-color: var(--accent-purple);
     }
 
     .hamburger-btn span {
-      width: 100%;
+      position: absolute;
+      width: 20px;
       height: 2px;
       background: var(--text-main);
       border-radius: 2px;
-      transition: all 0.25s ease;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease, background-color 0.2s ease;
+    }
+
+    .hamburger-btn span:nth-child(1) {
+      transform: translateY(-6px);
+    }
+    .hamburger-btn span:nth-child(2) {
+      transform: translateY(0);
+    }
+    .hamburger-btn span:nth-child(3) {
+      transform: translateY(6px);
+    }
+
+    .hamburger-btn.active {
+      border-color: var(--accent-purple);
+      box-shadow: 3px 3px 0px var(--accent-purple);
+    }
+
+    .hamburger-btn.active span {
+      background-color: var(--accent-purple);
     }
 
     .hamburger-btn.active span:nth-child(1) {
-      transform: translateY(7px) rotate(45deg);
+      transform: translateY(0) rotate(45deg);
     }
     .hamburger-btn.active span:nth-child(2) {
       opacity: 0;
+      transform: scaleX(0);
     }
     .hamburger-btn.active span:nth-child(3) {
-      transform: translateY(-7px) rotate(-45deg);
+      transform: translateY(0) rotate(-45deg);
     }
 
     .drawer-overlay {
@@ -217,11 +248,12 @@
       transition: all 0.2s ease;
     }
 
-    .drawer-link img {
+    .drawer-link i {
       width: 20px;
       height: 20px;
-      border-radius: 4px;
-      filter:invert();
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .drawer-link:hover {
@@ -706,7 +738,7 @@
   <header>
     <a href="#" class="site-logo" id="site-logo-container">
       <img src="https://github.com/zeti1223.png" alt="Logo" onerror="this.style.display='none'">
-      <span><span class="logo-highlight">Zeti_1223</span></span>
+      <span><span class="logo-highlight">Zeti1223</span></span>
     </a>
 
     <ul class="nav-links">
@@ -727,29 +759,29 @@
     <div>
       <div class="drawer-section-title">Tools</div>
       <div class="drawer-links">
-        <a href="Tools/Calculator/index.html" class="drawer-link"><img src="Icon/calculator.png" alt="Calculator"> Calculator</a>
-        <a href="Tools/To-Do/index.html" class="drawer-link"><img src="Icon/todo.png" alt="To-do"> To-do</a>
-        <a href="Tools/Whiteboard/index.html" class="drawer-link"><img src="Icon/whiteboard.png" alt="Whiteboard"> Whiteboard</a>
-        <a href="Tools/Weather/index.html" class="drawer-link"><img src="Icon/weather.png" alt="Weather"> Weather</a>
-        <a href="Tools/Quiz/index.html" class="drawer-link"><img src="Icon/quiz.png" alt="Quiz"> Quiz</a>
-        <a href="Tools/Clock/index.html" class="drawer-link"><img src="Icon/clock.png" alt="Clock"> Clock</a>
+        <a href="Tools/Calculator/index.html" class="drawer-link"><i class="fa-solid fa-calculator"></i> Calculator</a>
+        <a href="Tools/To-Do/index.html" class="drawer-link"><i class="fa-solid fa-list-check"></i> To-do</a>
+        <a href="Tools/Whiteboard/index.html" class="drawer-link"><i class="fa-solid fa-chalkboard"></i> Whiteboard</a>
+        <a href="Tools/Weather/index.html" class="drawer-link"><i class="fa-solid fa-cloud-sun"></i> Weather</a>
+        <a href="Tools/Quiz/index.html" class="drawer-link"><i class="fa-solid fa-question"></i> Quiz</a>
+        <a href="Tools/Clock/index.html" class="drawer-link"><i class="fa-solid fa-clock"></i> Clock</a>
       </div>
     </div>
 
     <div>
       <div class="drawer-section-title">Games</div>
       <div class="drawer-links">
-        <a href="Games/Pac-Man/index.html" class="drawer-link"><img src="Icon/games.png" alt="Pac-Man"> Pac-Man</a>
-        <a href="Games/2048/index.html" class="drawer-link"><img src="Icon/games.png" alt="2048"> 2048</a>
-        <a href="Games/Snake/index.html" class="drawer-link"><img src="Icon/games.png" alt="Snake"> Snake</a>
+        <a href="Games/Pac-Man/index.html" class="drawer-link"><i class="fa-solid fa-ghost"></i> Pac-Man</a>
+        <a href="Games/2048/index.html" class="drawer-link"><i class="fa-solid fa-grip"></i> 2048</a>
+        <a href="Games/Snake/index.html" class="drawer-link"><i class="fa-solid fa-staff-snake"></i> Snake</a>
       </div>
     </div>
 
     <div>
       <div class="drawer-section-title">Account</div>
       <div class="drawer-links">
-        <a href="#login" class="drawer-link" id="drawer-auth-link"><img src="Icon/login.png" alt="Login"> Login</a>
-        <a href="Admin/index.html" class="drawer-link" id="drawer-admin-link" style="display: none;"><img src="Icon/admin.png" alt="Admin"> Go to admin panel</a>
+        <a href="#login" class="drawer-link" id="drawer-auth-link"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+        <a href="Admin/index.html" class="drawer-link" id="drawer-admin-link" style="display: none;"><i class="fa-solid fa-user-shield"></i> Go to admin panel</a>
       </div>
     </div>
   </div>
@@ -821,6 +853,7 @@
             <span class="row-label">Socials:</span>
             <a href="https://github.com/zeti1223" target="_blank" class="social-btn">GitHub</a>
             <a href="https://unsplash.com/@zeti_1223" target="_blank" class="social-btn">Unsplash</a>
+            <a href="https://stardance.hackclub.com/@Zeti_1223/" target="_blank" class="social-btn">Stardance</a>
             <a href="https://youtube.com/@Zeti_1223-offical" target="_blank" class="social-btn">YouTube channel</a>
           </div>
 
@@ -899,12 +932,14 @@
           <div class="project-card">
             <div class="project-thumb-container">
               ${image ? `<img src="${image}" alt="${title}" class="project-thumb" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">` : ''}
-              <div class="project-thumb-placeholder" style="${image ? 'display:none;' : ''}">💻</div>
+              <div class="project-thumb-placeholder" style="${image ? 'display:none;' : ''}">
+                <i class="fa-solid fa-laptop-code" style="font-size: 40px;"></i>
+              </div>
             </div>
             <h3 class="project-title">${title}</h3>
             <p class="project-desc">${desc}</p>
             <a href="${url}" target="_blank" rel="noopener noreferrer" class="project-btn">
-              View on github ↗
+              View on github <i class="fa-brands fa-github" style="font-size: 16px;"></i>
             </a>
           </div>
         `;
@@ -918,11 +953,11 @@
         let list = Array.isArray(data) ? data : Object.values(data);
         renderProjects(list);
       } else {
-        renderProjects(defaultProjects);
+        document.getElementById("projects").style.display = "none";
       }
     }, (error) => {
-      console.warn("Firebase error, rendering defaults:", error);
-      renderProjects(defaultProjects);
+      console.warn("Firebase error, hiding projects section:", error);
+      document.getElementById("projects").style.display = "none";
     });
 
     const hamburgerBtn = document.getElementById("hamburger-toggle");
@@ -952,6 +987,15 @@
     checkAdminAccess();
 
     document.querySelectorAll(".drawer-link").forEach(link => {
+      link.addEventListener("click", () => {
+        if (drawerMenu.classList.contains("open")) {
+          toggleMenu();
+        }
+      });
+    });
+
+    // Also close menu when clicking on nav links
+    document.querySelectorAll(".nav-links a").forEach(link => {
       link.addEventListener("click", () => {
         if (drawerMenu.classList.contains("open")) {
           toggleMenu();
@@ -1082,10 +1126,10 @@
       const authLink = document.getElementById("drawer-auth-link");
       
       if (loggedInUser) {
-        authLink.textContent = "Logout";
+        authLink.innerHTML = '<i class="fa-solid fa-right-from-bracket"></i> Logout';
         authLink.href = "#";
       } else {
-        authLink.textContent = "Login";
+        authLink.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Login';
         authLink.href = "#login";
       }
     }
