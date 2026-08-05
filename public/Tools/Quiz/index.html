@@ -1,18 +1,26 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quiz Website</title>
-    <link rel="stylesheet" href="style.css" />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/@catppuccin/palette@latest/css/catppuccin.css"
-    />
-    <link rel="website icon" type="png" href="../../Icon/quiz.png" />
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz</title>
+  <link rel="website icon" type="image/png" href="../../Icon/quiz.png"/>
 
-  <body>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+
+<body>
+  <a href="../../index.html" class="back-btn">
+    <i class="fas fa-arrow-left"></i>
+    Back to Home
+  </a>
+  
+  <div class="container">
     <div class="quiz-container" id="quiz">
       <div class="quiz-header">
         <h2 id="question">Question text</h2>
@@ -35,9 +43,10 @@
           </li>
         </ul>
       </div>
-      <button id="submit">Tovább</button>
+      <button id="submit">Next</button>
     </div>
-    <script src="script.js"></script>
-    <script src="../inspect.js"></script>
-  </body>
+  </div>
+  <script src="script.js"></script>
+  <script src="../inspect.js"></script>
+</body>
 </html>

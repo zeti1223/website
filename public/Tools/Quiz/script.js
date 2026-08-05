@@ -1,6 +1,6 @@
 const quizData = [
   {
-    question: "Melyik két cég megalapításában játszott közre Steve Jobs?",
+    question: "Which two companies did Steve Jobs help found?",
     a: "Apple, IBM",
     b: "Apple, Pixar",
     c: "Apple, Disney",
@@ -8,36 +8,76 @@ const quizData = [
     correct: "b",
   },
   {
-    question: "Hány kerülete van Budapestnek?",
-    a: "22",
-    b: "25",
-    c: "11",
-    d: "23",
-    correct: "d",
-  },
-  {
-    question: "Mit jelöl a Hyundai logoja?",
-    a: "Két embert, ahogy kezet fognak",
-    b: "Egy létrát",
-    c: "Az alapító nevének első betűjét",
-    d: "Oroszlánt",
-    correct: "a",
-  },
-  {
-    question: "Mennyi 4!-2?",
-    a: "8",
-    b: "2",
-    c: "22",
-    d: "24",
+    question: "What is the capital of Australia?",
+    a: "Sydney",
+    b: "Melbourne",
+    c: "Canberra",
+    d: "Brisbane",
     correct: "c",
   },
   {
-    question: "Hogyan írjuk helyesen?",
-    a: "Jégpálya",
-    b: "Jégpája",
-    c: "Lyégpálya",
-    d: "Lyégpája",
+    question: "What does the 'H' in HTML stand for?",
+    a: "Hyper",
+    b: "High",
+    c: "Home",
+    d: "Hybrid",
     correct: "a",
+  },
+  {
+    question: "Which planet is known as the Red Planet?",
+    a: "Venus",
+    b: "Mars",
+    c: "Jupiter",
+    d: "Saturn",
+    correct: "b",
+  },
+  {
+    question: "What is the largest ocean on Earth?",
+    a: "Atlantic Ocean",
+    b: "Indian Ocean",
+    c: "Arctic Ocean",
+    d: "Pacific Ocean",
+    correct: "d",
+  },
+  {
+    question: "Who painted the Mona Lisa?",
+    a: "Vincent van Gogh",
+    b: "Pablo Picasso",
+    c: "Leonardo da Vinci",
+    d: "Michelangelo",
+    correct: "c",
+  },
+  {
+    question: "What is the chemical symbol for gold?",
+    a: "Go",
+    b: "Gd",
+    c: "Au",
+    d: "Ag",
+    correct: "c",
+  },
+  {
+    question: "In which year did World War II end?",
+    a: "1943",
+    b: "1944",
+    c: "1945",
+    d: "1946",
+    correct: "c",
+  },
+  {
+    question: "What is the fastest land animal?",
+    a: "Lion",
+    b: "Cheetah",
+    c: "Gazelle",
+    d: "Horse",
+    correct: "b",
+  },
+  {
+    question: "How many bones are in the adult human body?",
+    a: "186",
+    b: "206",
+    c: "226",
+    d: "246",
+    correct: "b",
   },
 ];
 
@@ -94,8 +134,8 @@ submitBtn.addEventListener("click", () => {
       loadQuiz();
     } else {
       quiz.innerHTML = `
-                <h2>${score}/${quizData.length} kérdésre válaszoltál helyesen!</h2>
-                <button onclick="location.reload()">Újrakezdés</button>
+                <h2>You answered ${score}/${quizData.length} questions correctly!</h2>
+                <button onclick="location.reload()">Restart</button>
             `;
     }
   }
