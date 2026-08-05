@@ -762,7 +762,7 @@
       <div class="drawer-links">
         <a href="Tools/Calculator/index.html" class="drawer-link"><i class="fa-solid fa-calculator"></i> Calculator</a>
         <a href="Tools/To-Do/index.html" class="drawer-link"><i class="fa-solid fa-list-check"></i> To-do</a>
-        <a href="Tools/Whiteboard/index.html" class="drawer-link"><i class="fa-solid fa-chalkboard"></i> Whiteboard</a>
+        <a href="Tools/Whiteboard/index.html" class="drawer-link" id="whiteboard-link"><i class="fa-solid fa-chalkboard"></i> Whiteboard</a>
         <a href="Tools/Weather/index.html" class="drawer-link"><i class="fa-solid fa-cloud-sun"></i> Weather</a>
       </div>
     </div>
@@ -1153,6 +1153,19 @@
     }
 
     setRandomAccentColor();
+
+    function isMobile() {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
+    if (isMobile()) {
+      const whiteboardLink = document.getElementById('whiteboard-link');
+      if (whiteboardLink) {
+        whiteboardLink.style.pointerEvents = 'none';
+        whiteboardLink.style.opacity = '0.5';
+        whiteboardLink.style.cursor = 'not-allowed';
+      }
+    }
   </script>
 </body>
 </html>
