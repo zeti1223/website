@@ -866,7 +866,7 @@
 
           <div class="about-row">
             <span class="row-label">Contact me:</span>
-            <a href="mailto:zeteny@cigoria.eu" class="contact-box">E-mail: zeteny@cigoria.eu</a>
+            <a href="mailto:zeteny@cigoria.eu" id="contact-email-link" class="contact-box">E-mail: zeteny@cigoria.eu</a>
           </div>
         </div>
       </div>
@@ -909,6 +909,7 @@
 
     const projectsGrid = document.getElementById("projects-grid");
     const socialLinksContainer = document.getElementById("social-links-container");
+    const contactEmailLink = document.getElementById("contact-email-link");
     document.getElementById("year").textContent = new Date().getFullYear();
 
     function renderProjects(projects) {
@@ -959,6 +960,14 @@
       }).join("");
     }
 
+    function renderContactEmail(email) {
+      if (!email) {
+        email = "zeteny@cigoria.eu";
+      }
+      contactEmailLink.href = `mailto:${email}`;
+      contactEmailLink.textContent = `E-mail: ${email}`;
+    }
+
     const projectsRef = ref(db, 'github_projects');
     onValue(projectsRef, (snapshot) => {
       const data = snapshot.val();
@@ -982,6 +991,16 @@
       }
     }, (error) => {
       console.warn("Firebase error loading social links:", error);
+    });
+
+    const contactEmailRef = ref(db, 'contact_email');
+    onValue(contactEmailRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        renderContactEmail(data);
+      }
+    }, (error) => {
+      console.warn("Firebase error loading contact email:", error);
     });
 
     const hamburgerBtn = document.getElementById("hamburger-toggle");

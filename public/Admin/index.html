@@ -369,6 +369,22 @@
         </div>
       </div>
     </div>
+
+    <div class="admin-card">
+      <div class="card-title"><i class="fa-solid fa-envelope" style="margin-right: 6px;"></i>Contact Email</div>
+      
+      <div style="margin-bottom: 20px;">
+        <label>Email Address</label>
+        <input type="text" id="contact-email" placeholder="your@email.com" style="width: 100%; padding: 10px 14px; background: #1e1e1e; border: 2px solid var(--card-border); border-radius: 8px; color: var(--text-main); font-size: 1rem; outline: none;">
+      </div>
+
+      <div class="actions-bar">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span id="email-status-msg" class="status-msg"></span>
+          <button id="save-email-btn" class="btn btn-success"><i class="fa-solid fa-floppy-disk" style="margin-right: 4px;"></i>Save Email</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -382,6 +398,7 @@
 
     let projects = [];
     let socialLinks = [];
+    let contactEmail = "";
 
     const defaultProjects = [
       {
@@ -437,6 +454,8 @@
       }
     ];
 
+    const defaultEmail = "zeteny@cigoria.eu";
+
     const projectsListEl = document.getElementById("projects-list");
     const statusMsg = document.getElementById("status-msg");
     const socialLinksListEl = document.getElementById("social-links-list");
@@ -475,6 +494,23 @@
         console.error("Error:", err);
         socialLinks = defaultSocialLinks;
         renderSocialLinksList();
+      }
+    }
+
+    async function loadEmailFromFirebase() {
+      try {
+        const emailRef = ref(db, 'contact_email');
+        const snapshot = await get(emailRef);
+        if (snapshot.exists()) {
+          contactEmail = snapshot.val();
+        } else {
+          contactEmail = defaultEmail;
+        }
+        document.getElementById("contact-email").value = contactEmail;
+      } catch (err) {
+        console.error("Error:", err);
+        contactEmail = defaultEmail;
+        document.getElementById("contact-email").value = contactEmail;
       }
     }
 
@@ -636,6 +672,28 @@
       });
     }
 
+    document.getElementById("contact-email").addEventListener("input", (e) => {
+      contactEmail = e.target.value;
+    });
+
+    document.getElementById("save-email-btn").addEventListener("click", async () => {
+      const emailStatusMsg = document.getElementById("email-status-msg");
+      emailStatusMsg.className = "status-msg";
+      emailStatusMsg.textContent = "Saving...";
+
+      try {
+        const emailRef = ref(db, 'contact_email');
+        await set(emailRef, contactEmail);
+        emailStatusMsg.className = "status-msg success";
+        emailStatusMsg.textContent = "Successfully saved email!";
+        setTimeout(() => { emailStatusMsg.textContent = ""; }, 4000);
+      } catch (err) {
+        console.error(err);
+        emailStatusMsg.className = "status-msg error";
+        emailStatusMsg.textContent = "Error saving email.";
+      }
+    });
+
     document.getElementById("add-social-btn").addEventListener("click", () => {
       socialLinks.push({
         enabled: true,
@@ -725,6 +783,7 @@
 
     loadProjectsFromFirebase();
     loadSocialLinksFromFirebase();
+    loadEmailFromFirebase();
   </script>
 </body>
 </html>
