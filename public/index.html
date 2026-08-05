@@ -1152,6 +1152,24 @@
     }
 
     updateLoginState();
+
+    function setRandomAccentColor() {
+      const accentColors = [
+        { main: 'var(--accent-purple)', bg: 'rgba(105, 101, 219, 0.15)' },
+        { main: 'var(--accent-teal)', bg: 'rgba(18, 184, 134, 0.15)' },
+        { main: 'var(--accent-orange)', bg: 'rgba(255, 146, 43, 0.15)' },
+        { main: 'var(--accent-pink)', bg: 'rgba(240, 101, 149, 0.15)' }
+      ];
+      const randomColor = accentColors[Math.floor(Math.random() * accentColors.length)];
+      const highlightElement = document.querySelector('.hero-title .highlight');
+      if (highlightElement) {
+        highlightElement.style.color = randomColor.main;
+        highlightElement.style.borderColor = randomColor.main;
+        highlightElement.style.backgroundColor = randomColor.bg;
+      }
+    }
+
+    setRandomAccentColor();
   </script>
 </body>
 </html>
