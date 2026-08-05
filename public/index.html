@@ -847,26 +847,17 @@
         <div class="about-details">
           <h2 class="about-heading">About <span class="highlight">me</span></h2>
           <p class="about-bio" id="about-bio-content">
-            Hello, I am a 14 year old software developer who loves learning new technologies.
-            <br/>
-            I mainly work with <span class="code-tag">JavaScript</span> and <span class="code-tag">Python</span>, and I’m currently learning <span class="code-tag">Lua</span>.
-            <br/>
-            When I'm not coding, I like contributing to open source projects or reading tech articles.
           </p>
 
           <div class="about-row">
             <span class="row-label">Socials:</span>
             <div id="social-links-container">
-              <a href="https://github.com/zeti1223" target="_blank" class="social-btn">GitHub</a>
-              <a href="https://unsplash.com/@zeti_1223" target="_blank" class="social-btn">Unsplash</a>
-              <a href="https://stardance.hackclub.com/@Zeti_1223/" target="_blank" class="social-btn">Stardance</a>
-              <a href="https://youtube.com/@Zeti_1223-offical" target="_blank" class="social-btn">YouTube channel</a>
             </div>
           </div>
 
           <div class="about-row">
             <span class="row-label">Contact me:</span>
-            <a href="mailto:zeteny@cigoria.eu" id="contact-email-link" class="contact-box">E-mail: zeteny@cigoria.eu</a>
+            <a href="" id="contact-email-link" class="contact-box"></a>
           </div>
         </div>
       </div>
@@ -944,12 +935,7 @@
 
     function renderSocialLinks(links) {
       if (!links || links.length === 0) {
-        socialLinksContainer.innerHTML = `
-          <a href="https://github.com/zeti1223" target="_blank" class="social-btn">GitHub</a>
-          <a href="https://unsplash.com/@zeti_1223" target="_blank" class="social-btn">Unsplash</a>
-          <a href="https://stardance.hackclub.com/@Zeti_1223/" target="_blank" class="social-btn">Stardance</a>
-          <a href="https://youtube.com/@Zeti_1223-offical" target="_blank" class="social-btn">YouTube channel</a>
-        `;
+        socialLinksContainer.innerHTML = "";
         return;
       }
 
@@ -962,11 +948,13 @@
     }
 
     function renderContactEmail(email) {
-      if (!email) {
-        email = "zeteny@cigoria.eu";
+      if (email) {
+        contactEmailLink.href = `mailto:${email}`;
+        contactEmailLink.textContent = `E-mail: ${email}`;
+      } else {
+        contactEmailLink.href = "";
+        contactEmailLink.textContent = "";
       }
-      contactEmailLink.href = `mailto:${email}`;
-      contactEmailLink.textContent = `E-mail: ${email}`;
     }
 
     function renderAboutBio(bio) {

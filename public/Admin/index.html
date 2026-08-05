@@ -448,30 +448,9 @@
       }
     ];
 
-    const defaultSocialLinks = [
-      {
-        enabled: true,
-        name: "GitHub",
-        url: "https://github.com/zeti1223"
-      },
-      {
-        enabled: true,
-        name: "Unsplash",
-        url: "https://unsplash.com/@zeti_1223"
-      },
-      {
-        enabled: true,
-        name: "Stardance",
-        url: "https://stardance.hackclub.com/@Zeti_1223/"
-      },
-      {
-        enabled: true,
-        name: "YouTube channel",
-        url: "https://youtube.com/@Zeti_1223-offical"
-      }
-    ];
 
-    const defaultEmail = "zeteny@cigoria.eu";
+
+
 
     const projectsListEl = document.getElementById("projects-list");
     const statusMsg = document.getElementById("status-msg");
@@ -503,13 +482,14 @@
         if (snapshot.exists()) {
           const val = snapshot.val();
           socialLinks = Array.isArray(val) ? val : Object.values(val);
+          renderSocialLinksList();
         } else {
-          socialLinks = defaultSocialLinks;
+          socialLinks = [];
+          renderSocialLinksList();
         }
-        renderSocialLinksList();
       } catch (err) {
         console.error("Error:", err);
-        socialLinks = defaultSocialLinks;
+        socialLinks = [];
         renderSocialLinksList();
       }
     }
@@ -520,14 +500,13 @@
         const snapshot = await get(emailRef);
         if (snapshot.exists()) {
           contactEmail = snapshot.val();
+          document.getElementById("contact-email").value = contactEmail;
         } else {
-          contactEmail = defaultEmail;
+          document.getElementById("contact-email").value = "";
         }
-        document.getElementById("contact-email").value = contactEmail;
       } catch (err) {
         console.error("Error:", err);
-        contactEmail = defaultEmail;
-        document.getElementById("contact-email").value = contactEmail;
+        document.getElementById("contact-email").value = "";
       }
     }
 
