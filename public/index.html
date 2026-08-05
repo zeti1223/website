@@ -836,7 +836,7 @@
 
     <div class="section-divider"></div>
 
-    <section id="about">
+    <section id="about" style="display: none;">
       <div class="about-card">
         <div class="about-avatar-wrap">
           <div class="about-avatar-circle">
@@ -1005,6 +1005,7 @@
       const data = snapshot.val();
       if (data) {
         renderAboutBio(data);
+        document.getElementById("about").style.display = "block";
       }
     }, (error) => {
       console.warn("Firebase error loading about bio:", error);
