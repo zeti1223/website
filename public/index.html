@@ -672,6 +672,12 @@
       border-color: var(--accent-purple);
     }
 
+    #social-links-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
     .contact-box {
       display: inline-flex;
       align-items: center;
@@ -850,10 +856,12 @@
 
           <div class="about-row">
             <span class="row-label">Socials:</span>
-            <a href="https://github.com/zeti1223" target="_blank" class="social-btn">GitHub</a>
-            <a href="https://unsplash.com/@zeti_1223" target="_blank" class="social-btn">Unsplash</a>
-            <a href="https://stardance.hackclub.com/@Zeti_1223/" target="_blank" class="social-btn">Stardance</a>
-            <a href="https://youtube.com/@Zeti_1223-offical" target="_blank" class="social-btn">YouTube channel</a>
+            <div id="social-links-container">
+              <a href="https://github.com/zeti1223" target="_blank" class="social-btn">GitHub</a>
+              <a href="https://unsplash.com/@zeti_1223" target="_blank" class="social-btn">Unsplash</a>
+              <a href="https://stardance.hackclub.com/@Zeti_1223/" target="_blank" class="social-btn">Stardance</a>
+              <a href="https://youtube.com/@Zeti_1223-offical" target="_blank" class="social-btn">YouTube channel</a>
+            </div>
           </div>
 
           <div class="about-row">
@@ -900,6 +908,7 @@
     ];
 
     const projectsGrid = document.getElementById("projects-grid");
+    const socialLinksContainer = document.getElementById("social-links-container");
     document.getElementById("year").textContent = new Date().getFullYear();
 
     function renderProjects(projects) {
@@ -931,6 +940,25 @@
       }).join("");
     }
 
+    function renderSocialLinks(links) {
+      if (!links || links.length === 0) {
+        socialLinksContainer.innerHTML = `
+          <a href="https://github.com/zeti1223" target="_blank" class="social-btn">GitHub</a>
+          <a href="https://unsplash.com/@zeti_1223" target="_blank" class="social-btn">Unsplash</a>
+          <a href="https://stardance.hackclub.com/@Zeti_1223/" target="_blank" class="social-btn">Stardance</a>
+          <a href="https://youtube.com/@Zeti_1223-offical" target="_blank" class="social-btn">YouTube channel</a>
+        `;
+        return;
+      }
+
+      const enabledLinks = links.filter(link => link.enabled !== false);
+      socialLinksContainer.innerHTML = enabledLinks.map(link => {
+        const name = link.name || "Link";
+        const url = link.url || "#";
+        return `<a href="${url}" target="_blank" class="social-btn">${name}</a>`;
+      }).join("");
+    }
+
     const projectsRef = ref(db, 'github_projects');
     onValue(projectsRef, (snapshot) => {
       const data = snapshot.val();
@@ -943,6 +971,17 @@
     }, (error) => {
       console.warn("Firebase error, hiding projects section:", error);
       document.getElementById("projects").style.display = "none";
+    });
+
+    const socialLinksRef = ref(db, 'social_links');
+    onValue(socialLinksRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        let list = Array.isArray(data) ? data : Object.values(data);
+        renderSocialLinks(list);
+      }
+    }, (error) => {
+      console.warn("Firebase error loading social links:", error);
     });
 
     const hamburgerBtn = document.getElementById("hamburger-toggle");

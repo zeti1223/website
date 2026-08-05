@@ -349,6 +349,26 @@
         </div>
       </div>
     </div>
+
+    <div class="admin-card">
+      <div class="card-title">
+        <span><i class="fa-solid fa-share-nodes" style="margin-right: 6px;"></i>Social Links</span>
+        <button id="add-social-btn" class="btn btn-secondary"><i class="fa-solid fa-plus"></i> Add Link</button>
+      </div>
+      
+      <div id="social-links-list" class="projects-list">
+        <div style="text-align: center; color: var(--text-muted); padding: 20px;">
+          Loading social links from Firebase...
+        </div>
+      </div>
+
+      <div class="actions-bar">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span id="social-status-msg" class="status-msg"></span>
+          <button id="save-social-btn" class="btn btn-success"><i class="fa-solid fa-floppy-disk" style="margin-right: 4px;"></i>Save Social Links</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -361,6 +381,7 @@
     import { db, ref, get, set } from "../firebase.js";
 
     let projects = [];
+    let socialLinks = [];
 
     const defaultProjects = [
       {
@@ -393,8 +414,33 @@
       }
     ];
 
+    const defaultSocialLinks = [
+      {
+        enabled: true,
+        name: "GitHub",
+        url: "https://github.com/zeti1223"
+      },
+      {
+        enabled: true,
+        name: "Unsplash",
+        url: "https://unsplash.com/@zeti_1223"
+      },
+      {
+        enabled: true,
+        name: "Stardance",
+        url: "https://stardance.hackclub.com/@Zeti_1223/"
+      },
+      {
+        enabled: true,
+        name: "YouTube channel",
+        url: "https://youtube.com/@Zeti_1223-offical"
+      }
+    ];
+
     const projectsListEl = document.getElementById("projects-list");
     const statusMsg = document.getElementById("status-msg");
+    const socialLinksListEl = document.getElementById("social-links-list");
+    const socialStatusMsg = document.getElementById("social-status-msg");
 
     async function loadProjectsFromFirebase() {
       try {
@@ -411,6 +457,24 @@
         console.error("Error:", err);
         projects = defaultProjects;
         renderProjectsList();
+      }
+    }
+
+    async function loadSocialLinksFromFirebase() {
+      try {
+        const socialRef = ref(db, 'social_links');
+        const snapshot = await get(socialRef);
+        if (snapshot.exists()) {
+          const val = snapshot.val();
+          socialLinks = Array.isArray(val) ? val : Object.values(val);
+        } else {
+          socialLinks = defaultSocialLinks;
+        }
+        renderSocialLinksList();
+      } catch (err) {
+        console.error("Error:", err);
+        socialLinks = defaultSocialLinks;
+        renderSocialLinksList();
       }
     }
 
@@ -460,6 +524,72 @@
       attachListEvents();
     }
 
+    function renderSocialLinksList() {
+      if (socialLinks.length === 0) {
+        socialLinksListEl.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 20px;">No social links to display.</div>`;
+        return;
+      }
+
+      socialLinksListEl.innerHTML = socialLinks.map((link, idx) => {
+        const enabled = link.enabled !== false;
+        return `
+          <div class="project-item ${enabled ? '' : 'disabled'}" data-index="${idx}">
+            <div class="checkbox-wrap">
+              <input type="checkbox" class="social-checkbox" data-index="${idx}" ${enabled ? 'checked' : ''} title="Display">
+            </div>
+            
+            <div class="item-fields">
+              <div>
+                <label>Link Name</label>
+                <input type="text" class="social-name" data-index="${idx}" value="${escapeHtml(link.name || '')}">
+              </div>
+
+              <div>
+                <label>URL</label>
+                <input type="text" class="social-url" data-index="${idx}" value="${escapeHtml(link.url || '')}">
+              </div>
+            </div>
+
+            <div>
+              <button class="btn btn-danger social-delete-btn" data-index="${idx}"><i class="fa-solid fa-trash"></i></button>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      attachSocialLinksEvents();
+    }
+
+    function attachSocialLinksEvents() {
+      document.querySelectorAll(".social-checkbox").forEach(cb => {
+        cb.addEventListener("change", (e) => {
+          const idx = e.target.dataset.index;
+          socialLinks[idx].enabled = e.target.checked;
+          renderSocialLinksList();
+        });
+      });
+
+      document.querySelectorAll(".social-name").forEach(inp => {
+        inp.addEventListener("input", (e) => {
+          socialLinks[e.target.dataset.index].name = e.target.value;
+        });
+      });
+
+      document.querySelectorAll(".social-url").forEach(inp => {
+        inp.addEventListener("input", (e) => {
+          socialLinks[e.target.dataset.index].url = e.target.value;
+        });
+      });
+
+      document.querySelectorAll(".social-delete-btn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          const idx = btn.dataset.index;
+          socialLinks.splice(idx, 1);
+          renderSocialLinksList();
+        });
+      });
+    }
+
     function escapeHtml(str) {
       return (str || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
     }
@@ -505,6 +635,32 @@
         });
       });
     }
+
+    document.getElementById("add-social-btn").addEventListener("click", () => {
+      socialLinks.push({
+        enabled: true,
+        name: "New Link",
+        url: "https://"
+      });
+      renderSocialLinksList();
+    });
+
+    document.getElementById("save-social-btn").addEventListener("click", async () => {
+      socialStatusMsg.className = "status-msg";
+      socialStatusMsg.textContent = "Saving...";
+
+      try {
+        const socialRef = ref(db, 'social_links');
+        await set(socialRef, socialLinks);
+        socialStatusMsg.className = "status-msg success";
+        socialStatusMsg.textContent = "Successfully saved social links!";
+        setTimeout(() => { socialStatusMsg.textContent = ""; }, 4000);
+      } catch (err) {
+        console.error(err);
+        socialStatusMsg.className = "status-msg error";
+        socialStatusMsg.textContent = "Error saving social links.";
+      }
+    });
 
     document.getElementById("fetch-github-btn").addEventListener("click", async () => {
       statusMsg.className = "status-msg";
@@ -568,6 +724,7 @@
     });
 
     loadProjectsFromFirebase();
+    loadSocialLinksFromFirebase();
   </script>
 </body>
 </html>
