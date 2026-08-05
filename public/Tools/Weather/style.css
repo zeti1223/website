@@ -31,12 +31,25 @@ body {
   background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1.5px, transparent 1.5px);
   background-size: 24px 24px;
   user-select: none;
-  padding: 100px 20px 40px;
+  padding: 40px 20px;
 }
 
 .container {
   max-width: 900px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding-bottom: 15px;
+  border-bottom: 2px dashed var(--card-border);
 }
 
 .search-container {
@@ -155,36 +168,33 @@ input::placeholder {
   color: var(--accent-orange);
 }
 
-.back-home-btn {
-  position: fixed;
-  top: 90px;
-  left: 5%;
-  display: flex;
+.back-link {
+  display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 20px;
+  padding: 8px 16px;
   background: var(--card-bg);
   border: 2px solid var(--card-border);
-  border-radius: 12px;
+  border-radius: 8px;
   color: var(--text-main);
   text-decoration: none;
   font-family: var(--font-hand);
-  font-size: 1.1rem;
-  box-shadow: 3px 3px 0px #000;
+  font-size: 1.15rem;
+  font-weight: 700;
+  box-shadow: 2px 2px 0px #000;
   transition: all 0.2s ease;
-  z-index: 50;
-  font-weight: 600;
 }
 
-.back-home-btn:hover {
+.back-link:hover {
   transform: translate(-2px, -2px);
-  box-shadow: 5px 5px 0px var(--accent-purple);
+  box-shadow: 4px 4px 0px var(--accent-purple);
   border-color: var(--accent-purple);
-  color: var(--accent-purple);
 }
 
-.back-home-btn i {
-  font-size: 1rem;
+.back-link i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media (max-width: 768px) {
@@ -204,12 +214,5 @@ input::placeholder {
 
   .weather_description .temp {
     font-size: 2rem;
-  }
-
-  .back-home-btn {
-    top: 85px;
-    left: 3%;
-    padding: 10px 16px;
-    font-size: 1rem;
   }
 }

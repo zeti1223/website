@@ -29,6 +29,7 @@ body {
   background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1.5px, transparent 1.5px);
   background-size: 24px 24px;
   user-select: none;
+  padding: 20px;
 }
 
 .container {
@@ -39,36 +40,47 @@ body {
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
+  gap: 25px;
 }
 
-.back-btn {
+.header-bar {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding-bottom: 15px;
+  border-bottom: 2px dashed var(--card-border);
+  width: 100%;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
   gap: 8px;
-  padding: 10px 20px;
+  padding: 8px 16px;
   background: var(--card-bg);
   border: 2px solid var(--card-border);
-  border-radius: 10px;
+  border-radius: 8px;
   color: var(--text-main);
   text-decoration: none;
   font-family: var(--font-hand);
-  font-size: 1.1rem;
-  font-weight: 600;
-  box-shadow: var(--shadow-offset);
+  font-size: 1.15rem;
+  font-weight: 700;
+  box-shadow: 2px 2px 0px #000;
   transition: all 0.2s ease;
-  margin-bottom: 40px;
-  align-self: flex-start;
 }
 
-.back-btn:hover {
+.back-link:hover {
   transform: translate(-2px, -2px);
-  box-shadow: var(--shadow-hover);
+  box-shadow: 4px 4px 0px var(--accent-purple);
   border-color: var(--accent-purple);
-  color: var(--accent-purple);
 }
 
-.back-btn i {
-  font-size: 1rem;
+.back-link i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .calc {
