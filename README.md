@@ -9,7 +9,6 @@ A classic tools website featuring various utilities and games.
 - **JavaScript** - Game logic and interactivity
 - **Firebase Hosting** - Static site deployment
 - **Prettier** - Code formatting
-- **TailwindCSS** - Utility-first CSS framework
 
 ## AI Usage
 
