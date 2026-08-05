@@ -846,7 +846,7 @@
 
         <div class="about-details">
           <h2 class="about-heading">About <span class="highlight">me</span></h2>
-          <p class="about-bio">
+          <p class="about-bio" id="about-bio-content">
             Hello, I am a 14 year old software developer who loves learning new technologies.
             <br/>
             I mainly work with <span class="code-tag">JavaScript</span> and <span class="code-tag">Python</span>, and I’m currently learning <span class="code-tag">Lua</span>.
@@ -874,7 +874,7 @@
   </main>
 
   <footer>
-    <p>&copy; <span id="year"></span> Source code:<a href="https://github.com/zeti1223/website">website</a></p>
+    <p>&copy;<span id="year"></span> Source code:<a href="https://github.com/zeti1223/website">website</a></p>
   </footer>
 
   <script type="module">
@@ -910,6 +910,7 @@
     const projectsGrid = document.getElementById("projects-grid");
     const socialLinksContainer = document.getElementById("social-links-container");
     const contactEmailLink = document.getElementById("contact-email-link");
+    const aboutBioContent = document.getElementById("about-bio-content");
     document.getElementById("year").textContent = new Date().getFullYear();
 
     function renderProjects(projects) {
@@ -968,6 +969,14 @@
       contactEmailLink.textContent = `E-mail: ${email}`;
     }
 
+    function renderAboutBio(bio) {
+      if (bio) {
+        aboutBioContent.innerHTML = bio;
+      } else {
+        aboutBioContent.innerHTML = "";
+      }
+    }
+
     const projectsRef = ref(db, 'github_projects');
     onValue(projectsRef, (snapshot) => {
       const data = snapshot.val();
@@ -1001,6 +1010,16 @@
       }
     }, (error) => {
       console.warn("Firebase error loading contact email:", error);
+    });
+
+    const aboutBioRef = ref(db, 'about_bio');
+    onValue(aboutBioRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        renderAboutBio(data);
+      }
+    }, (error) => {
+      console.warn("Firebase error loading about bio:", error);
     });
 
     const hamburgerBtn = document.getElementById("hamburger-toggle");

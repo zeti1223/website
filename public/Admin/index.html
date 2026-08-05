@@ -385,6 +385,22 @@
         </div>
       </div>
     </div>
+
+    <div class="admin-card">
+      <div class="card-title"><i class="fa-solid fa-user" style="margin-right: 6px;"></i>About Me Bio</div>
+      
+      <div style="margin-bottom: 20px;">
+        <label>Bio Text (HTML allowed - use &lt;br&gt; for line breaks)</label>
+        <textarea id="about-bio" placeholder="Your bio text..." style="width: 100%; min-height: 150px; padding: 12px 14px; background: #1e1e1e; border: 2px solid var(--card-border); border-radius: 8px; color: var(--text-main); font-size: 0.95rem; outline: none; resize: vertical; font-family: var(--font-body);"></textarea>
+      </div>
+
+      <div class="actions-bar">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span id="bio-status-msg" class="status-msg"></span>
+          <button id="save-bio-btn" class="btn btn-success"><i class="fa-solid fa-floppy-disk" style="margin-right: 4px;"></i>Save Bio</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -399,6 +415,7 @@
     let projects = [];
     let socialLinks = [];
     let contactEmail = "";
+    let aboutBio = "";
 
     const defaultProjects = [
       {
@@ -511,6 +528,22 @@
         console.error("Error:", err);
         contactEmail = defaultEmail;
         document.getElementById("contact-email").value = contactEmail;
+      }
+    }
+
+    async function loadBioFromFirebase() {
+      try {
+        const bioRef = ref(db, 'about_bio');
+        const snapshot = await get(bioRef);
+        if (snapshot.exists()) {
+          aboutBio = snapshot.val();
+          document.getElementById("about-bio").value = aboutBio;
+        } else {
+          document.getElementById("about-bio").value = "";
+        }
+      } catch (err) {
+        console.error("Error:", err);
+        document.getElementById("about-bio").value = "";
       }
     }
 
@@ -676,6 +709,10 @@
       contactEmail = e.target.value;
     });
 
+    document.getElementById("about-bio").addEventListener("input", (e) => {
+      aboutBio = e.target.value;
+    });
+
     document.getElementById("save-email-btn").addEventListener("click", async () => {
       const emailStatusMsg = document.getElementById("email-status-msg");
       emailStatusMsg.className = "status-msg";
@@ -691,6 +728,24 @@
         console.error(err);
         emailStatusMsg.className = "status-msg error";
         emailStatusMsg.textContent = "Error saving email.";
+      }
+    });
+
+    document.getElementById("save-bio-btn").addEventListener("click", async () => {
+      const bioStatusMsg = document.getElementById("bio-status-msg");
+      bioStatusMsg.className = "status-msg";
+      bioStatusMsg.textContent = "Saving...";
+
+      try {
+        const bioRef = ref(db, 'about_bio');
+        await set(bioRef, aboutBio);
+        bioStatusMsg.className = "status-msg success";
+        bioStatusMsg.textContent = "Successfully saved bio!";
+        setTimeout(() => { bioStatusMsg.textContent = ""; }, 4000);
+      } catch (err) {
+        console.error(err);
+        bioStatusMsg.className = "status-msg error";
+        bioStatusMsg.textContent = "Error saving bio.";
       }
     });
 
@@ -784,6 +839,7 @@
     loadProjectsFromFirebase();
     loadSocialLinksFromFirebase();
     loadEmailFromFirebase();
+    loadBioFromFirebase();
   </script>
 </body>
 </html>
