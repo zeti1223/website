@@ -43,42 +43,6 @@
       background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1.5px, transparent 1.5px);
       background-size: 24px 24px;
       user-select: none;
-      padding: 20px;
-    }
-
-    .header-actions {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 500px;
-      margin: 0 auto 20px auto;
-      gap: 10px;
-    }
-
-    .home-btn, .logout-btn {
-      background: var(--card-bg);
-      color: var(--text-main);
-      width: auto;
-      padding: 10px 20px;
-      font-size: 0.95rem;
-      margin: 0;
-      border: 2px solid var(--card-border);
-      border-radius: 10px;
-      cursor: pointer;
-      font-family: var(--font-hand);
-      font-weight: 600;
-      box-shadow: 3px 3px 0px #000;
-      transition: all 0.2s ease;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .home-btn:hover, .logout-btn:hover {
-      transform: translate(-1px, -1px);
-      box-shadow: 4px 4px 0px var(--accent-purple);
-      border-color: var(--accent-purple);
     }
 
     .container {
@@ -87,7 +51,44 @@
       text-align: center;
       width: 100%;
       box-sizing: border-box;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
     }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: var(--card-bg);
+      border: 2px solid var(--card-border);
+      border-radius: 10px;
+      color: var(--text-main);
+      text-decoration: none;
+      font-family: var(--font-hand);
+      font-size: 1.1rem;
+      font-weight: 600;
+      box-shadow: var(--shadow-offset);
+      transition: all 0.2s ease;
+      margin-bottom: 40px;
+      align-self: flex-start;
+    }
+
+    .back-btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--accent-purple);
+      color: var(--accent-purple);
+    }
+
+    .back-btn i {
+      font-size: 1rem;
+    }
+
+
 
     h1 {
       font-family: var(--font-hand);
@@ -203,18 +204,12 @@
 </head>
 
 <body>
-  <div class="header-actions">
-    <a href="../../index.html" class="home-btn">
-      <i class="fas fa-home"></i>
+  <div class="container">
+    <a href="../../index.html" class="back-btn">
+      <i class="fas fa-arrow-left"></i>
       Back to Home
     </a>
-    <button class="logout-btn" id="logout-btn">
-      <i class="fas fa-sign-out-alt"></i>
-      Logout
-    </button>
-  </div>
-  <div class="container">
-    <h1 id="welcome-title"><span class="highlight">To-Do</span> List</h1>
+    <h1><span class="highlight">To-Do</span> List</h1>
     <input type="text" placeholder="Enter a new task..." />
     <button id="add-btn">Add Task</button>
     <ul id="task-list">
@@ -245,27 +240,27 @@
     const db = getDatabase(app);
 
     const username = localStorage.getItem("loggedInUser");
-    if (!username) {
-      window.location.href = "../../Login.html";
-    } else {
-      document.getElementById("welcome-title").textContent = `${username}'s To-Do List`;
-    }
 
     const input = document.querySelector("input");
     const btn = document.querySelector("#add-btn");
     const taskList = document.querySelector("#task-list");
-    const logoutBtn = document.getElementById("logout-btn");
 
     async function loadTasksFromServer() {
-      try {
-        const snapshot = await get(ref(db, "todo/" + username));
-        if (snapshot.exists()) {
-          const savedTasks = snapshot.val() || [];
-          taskList.innerHTML = "";
-          savedTasks.forEach(addTask);
+      if (username) {
+        try {
+          const snapshot = await get(ref(db, "todo/" + username));
+          if (snapshot.exists()) {
+            const savedTasks = snapshot.val() || [];
+            taskList.innerHTML = "";
+            savedTasks.forEach(addTask);
+          }
+        } catch (error) {
+          console.error("Error loading tasks from server:", error);
         }
-      } catch (error) {
-        console.error("Error loading tasks from server:", error);
+      } else {
+        const savedTasks = JSON.parse(localStorage.getItem("localTasks") || "[]");
+        taskList.innerHTML = "";
+        savedTasks.forEach(addTask);
       }
     }
 
@@ -288,10 +283,15 @@
       taskList.querySelectorAll("li").forEach((task) => {
         tasks.push(task.firstChild.textContent);
       });
-      try {
-        await set(ref(db, "todo/" + username), tasks);
-      } catch (error) {
-        console.error("Error saving tasks to server:", error);
+      
+      if (username) {
+        try {
+          await set(ref(db, "todo/" + username), tasks);
+        } catch (error) {
+          console.error("Error saving tasks to server:", error);
+        }
+      } else {
+        localStorage.setItem("localTasks", JSON.stringify(tasks));
       }
     }
 
@@ -317,11 +317,6 @@
         await saveTasksToServer();
         input.value = "";
       }
-    });
-
-    logoutBtn.addEventListener("click", () => {
-      localStorage.removeItem("loggedInUser");
-      window.location.href = "../../Login.html";
     });
 
     loadTasksFromServer();
